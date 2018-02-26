@@ -3,7 +3,9 @@ package fr.jlc.polytech.scheduler.core;
 import com.sun.istack.internal.NotNull;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Task implements Serializable {
 	
@@ -18,6 +20,19 @@ public class Task implements Serializable {
     	setType(type);
     	setCapacity(capacity);
     	setDependencies(dependencies);
+    }
+    public Task(@NotNull Type type, @NotNull Capacity capacity, @NotNull Task... dependencies) {
+    	if (dependencies == null)
+    		throw new NullPointerException();
+    	
+	    ArrayList<Task> list = new ArrayList<>(dependencies.length);
+	
+	    if (dependencies.length > 0)
+	    	list.addAll(Arrays.asList(dependencies));
+		
+	    setType(type);
+	    setCapacity(capacity);
+	    setDependencies(list);
     }
 	public Task(@NotNull Type type, @NotNull Capacity capacity) {
     	this(type, capacity, new ArrayList<>());
