@@ -4,4 +4,5 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Cluster extends ArrayList<Machine> implements Serializable {
+    //coucou
 }
