@@ -37,6 +37,36 @@ public class Capacity {
 		
 		return trueValue;
 	}
+
+	public Capacity convertIntoCapacity(long value){
+
+		double nb0 = Math.log10(value);
+		Capacity c;
+		if( nb0>1 ){
+			switch ((int)nb0){
+				case 3:
+					c = new Capacity((int)value/1000, 'K');
+					break;
+				case 6:
+					c = new Capacity((int)value/1000000, 'M');
+					break;
+				case 9:
+					c = new Capacity((int)value/1000000000, 'G');
+					break;
+				case 12:
+					c = new Capacity((int) (value/1000000000000L), 'T');
+					break;
+				default :
+					c = new Capacity((int)value);
+
+			}
+			return c;
+		}
+		else {
+			c = new Capacity ((int)value);
+			return c;
+		}
+	}
 	
 	/* GETTERS & SETTERS */
 	
