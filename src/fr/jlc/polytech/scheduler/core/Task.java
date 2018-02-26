@@ -1,4 +1,6 @@
 package fr.jlc.polytech.scheduler.core;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
 }
