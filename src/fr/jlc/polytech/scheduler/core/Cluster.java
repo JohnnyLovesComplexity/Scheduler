@@ -23,6 +23,19 @@ public class Cluster extends ArrayList<Machine> implements Serializable {
 		super(initialCapacity);
 	}
 	
+	public ArrayList<Machine> getAll(@NotNull Type type) {
+		if (type == null)
+			throw new NullPointerException();
+		
+		ArrayList<Machine> list = new ArrayList<>(this.size()/3);
+		
+		for (Machine machine : this)
+			if (machine.getType() == type)
+				list.add(machine);
+		
+		return list;
+	}
+	
 	/* OVERRIDES */
 	
 	@Override
