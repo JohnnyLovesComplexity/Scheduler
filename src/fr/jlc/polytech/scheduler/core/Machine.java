@@ -13,19 +13,20 @@ public class Machine implements Serializable {
 	@NotNull
 	private Type type;
 	
-	private int capacity;
+	@NotNull
+	private Capacity capacity;
 	
 	@Nullable
 	private Job currentJob;
 	
 	/* CONSTRUCTORS */
 	
-	public Machine(@NotNull Type type, int capacity, @Nullable Job currentJob) {
+	public Machine(@NotNull Type type, @NotNull Capacity capacity, @Nullable Job currentJob) {
 		setType(type);
 		setCapacity(capacity);
 		setCurrentJob(currentJob);
 	}
-	public Machine(@NotNull Type type, int capacity) {
+	public Machine(@NotNull Type type, @NotNull Capacity capacity) {
 		this(type, capacity, null);
 	}
 	
@@ -62,13 +63,13 @@ public class Machine implements Serializable {
 		this.type = type;
 	}
 	
-	public int getCapacity() {
+	public @NotNull Capacity getCapacity() {
 		return capacity;
 	}
 	
-	protected void setCapacity(int capacity) {
-		if (capacity < 0)
-			throw new IllegalArgumentException("Capacity must be positive or null.");
+	protected void setCapacity(@NotNull Capacity capacity) {
+		if (capacity == null)
+			throw new NullPointerException();
 		
 		this.capacity = capacity;
 	}
