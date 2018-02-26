@@ -1,10 +1,7 @@
 package fr.jlc.polytech.scheduler.io;
 
 import com.sun.istack.internal.NotNull;
-import fr.jlc.polytech.scheduler.core.Box;
-import fr.jlc.polytech.scheduler.core.Job;
-import fr.jlc.polytech.scheduler.core.Task;
-import fr.jlc.polytech.scheduler.core.Type;
+import fr.jlc.polytech.scheduler.core.*;
 
 public class FileGenerator {
 	
@@ -33,7 +30,15 @@ public class FileGenerator {
 		for (Type type : Type.values()) {
 			build.append("\t")
 				 .append(type.toString())
-				 .append(" = []\n");
+				 .append(" = [");
+			
+			for (Cluster cluster : box.getClusters()) {
+				for (Machine machine : cluster) {
+				
+				}
+			}
+			
+			build.append("]\n");
 		}
 		
 		int jobNumber = 1;
@@ -52,9 +57,13 @@ public class FileGenerator {
 				taskNumber++;
 			}
 			
-			taskNumber = 1;
+			// Delete last ", "
+			build.deleteCharAt(build.length()-1);
+			build.deleteCharAt(build.length()-1);
 			
-			build.append("\n");
+			build.append("]\n");
+			
+			taskNumber = 1;
 			
 			for (Task task : job) {
 				build.append("\tT")
