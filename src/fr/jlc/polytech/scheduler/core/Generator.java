@@ -8,13 +8,13 @@ import java.util.Random;
 
 public class Generator {
 
-    private int counterTask = 0;
+    private static int counterTask = 0;
 
-    public Cluster generateCluster(){
+    private static Cluster generateCluster(){
         return (Cluster) generateMachines();
     }
 
-    public ArrayList<Machine> generateMachines() {
+    private static ArrayList<Machine> generateMachines() {
         Random nb = new Random();
         ArrayList<Machine> list_machine = new ArrayList<Machine>();
         for (Type type : Type.values()) {
@@ -25,7 +25,7 @@ public class Generator {
                 long capacityMax = type.getCapacityMax().convertIntoTrueValue();
                 long capacityMin = type.getCapacityMin().convertIntoTrueValue();
                 long capacityValue = ct.nextInt() % (capacityMax + 1 - capacityMin) + capacityMin;
-                Capacity capacity = new Capacity(0);
+                Capacity capacity = new Capacity(10);
                 capacity = capacity.convertIntoCapacity(capacityValue);
 
                 Machine machine = new Machine(type, capacity);
@@ -35,7 +35,7 @@ public class Generator {
         return list_machine;
     }
 
-    public ArrayList<Task> generateTask(Cluster list_machine){
+    private static ArrayList<Task> generateTask(Cluster list_machine){
         Random r = new Random();
         ArrayList<Task> list_task = new ArrayList<Task>();
         int nb_task = r.nextInt(10000);
@@ -56,7 +56,7 @@ public class Generator {
         return list_task;
     }
 
-    public ArrayList<Job> generateJobs(Cluster list_machine){
+    private static ArrayList<Job> generateJobs(Cluster list_machine){
         ArrayList<Job> list_job = new ArrayList<>();
         ArrayList<Task> list_task;
         Random rand = new Random();
@@ -68,11 +68,12 @@ public class Generator {
             }while(list_task.size() + counterTask >=maxTask);
             Job job = (Job) list_task;
             list_job.add(job);
+            counterTask += list_task.size();
         }
         return list_job;
     }
 
-    public Box generateBox(){
+    public static Box generateBox(){
         //For now we generate only one cluster in a box
         Cluster cluster = generateCluster();
         ArrayList<Cluster> list_cluster = new ArrayList<>();
@@ -85,7 +86,7 @@ public class Generator {
         return box;
     }
 
-    public Capacity generateCapacity(Machine machine){
+    private static Capacity generateCapacity(Machine machine){
         Random rd = new Random();
         int value = rd.nextInt() % (machine.getCapacity().getValue()*10 + 1);
         char scale = machine.getCapacity().getScale();
