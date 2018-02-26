@@ -52,7 +52,7 @@ public class Machine implements Serializable {
 		return type;
 	}
 	
-	public void setType(@NotNull Type type) {
+	protected void setType(@NotNull Type type) {
 		if (type == null)
 			throw new NullPointerException();
 		
@@ -63,7 +63,7 @@ public class Machine implements Serializable {
 		return capacity;
 	}
 	
-	public void setCapacity(int capacity) {
+	protected void setCapacity(int capacity) {
 		if (capacity < 0)
 			throw new IllegalArgumentException("Capacity must be positive or null.");
 		
