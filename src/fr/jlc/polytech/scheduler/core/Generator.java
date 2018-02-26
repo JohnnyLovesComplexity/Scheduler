@@ -1,5 +1,7 @@
 package fr.jlc.polytech.scheduler.core;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,12 +21,15 @@ public class Generator {
             int nbMachine = nb.nextInt(Cluster.MAX_MACHINE);
             for (int i = 0; i < nbMachine ; i++) {
                 Random ct = new Random();
-                /*
-                TODO: PHILIPPINE !!! CHANGE CA !! CA BUUUUG
-                int capacity = ct.nextInt() % (CAPACITY_MAX + 1 - CAPACITY_MIN) + CAPACITY_MIN;
-                Machine machine = new Machine(type, new Capacity(capacity));
+
+                long capacityMax = type.getCapacityMax().convertIntoTrueValue();
+                long capacityMin = type.getCapacityMin().convertIntoTrueValue();
+                long capacityValue = ct.nextInt() % (capacityMax + 1 - capacityMin) + capacityMin;
+                Capacity capacity = new Capacity(0);
+                capacity = capacity.convertIntoCapacity(capacityValue);
+
+                Machine machine = new Machine(type, capacity);
                 list_machine.add(machine);
-                */
             }
         }
         return list_machine;
@@ -51,21 +56,32 @@ public class Generator {
         return list_task;
     }
 
-    public ArrayList<Job> generateJob(Cluster list_machine){
-        int counterTask = 0;
+    public ArrayList<Job> generateJobs(Cluster list_machine){
         ArrayList<Job> list_job = new ArrayList<>();
-        while(counterTask < 10000){
+        ArrayList<Task> list_task;
+        Random rand = new Random();
+        int maxTask = rand.nextInt()%((10000 - 50000 +1)+50000);
+        while(counterTask < maxTask){
+            do{ //We can't overflow 10000 tasks for all the jobs
+                list_task = generateTask(list_machine);
 
+            }while(list_task.size() + counterTask >=maxTask);
+            Job job = (Job) list_task;
+            list_job.add(job);
         }
-
         return list_job;
     }
 
     public Box generateBox(){
+        //For now we generate only one cluster in a box
         Cluster cluster = generateCluster();
+        ArrayList<Cluster> list_cluster = new ArrayList<>();
+        list_cluster.add(cluster);
 
+        //Jobs
+        ArrayList<Job> list_job = generateJobs(cluster);
 
-        Box box = new Box();
+        Box box = new Box(list_cluster,list_job);
         return box;
     }
 

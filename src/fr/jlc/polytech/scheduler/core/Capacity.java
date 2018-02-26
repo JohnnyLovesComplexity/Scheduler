@@ -13,22 +13,22 @@ public class Capacity {
 		this(value, ' ');
 	}
 	
-	public int convertIntoTrueValue() {
-		int trueValue;
+	public long convertIntoTrueValue() {
+		long trueValue;
 		
 		switch (getScale())
 		{
 			case 'K':
-				trueValue = getValue() * (int) Math.pow(10, 3);
+				trueValue = (long) (getValue() * Math.pow(10, 3));
 				break;
 			case 'M':
-				trueValue = getValue() * (int) Math.pow(10, 6);
+				trueValue = (long) (getValue() * Math.pow(10, 6));
 				break;
 			case 'G':
-				trueValue = getValue() * (int) Math.pow(10, 9);
+				trueValue = (long) (getValue() * Math.pow(10, 9));
 				break;
 			case 'T':
-				trueValue = getValue() * (int) Math.pow(10, 12);
+				trueValue = (long) (getValue() * Math.pow(10, 12));
 				break;
 			default:
 				trueValue = getValue();
