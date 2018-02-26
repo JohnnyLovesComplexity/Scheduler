@@ -32,7 +32,7 @@ public class FileGenerator {
 		
 		for (Type type : Type.values()) {
 			build.append("\t")
-				 .append(type.name().toUpperCase())
+				 .append(type.toString())
 				 .append(" = []\n");
 		}
 		
@@ -57,12 +57,18 @@ public class FileGenerator {
 			build.append("\n");
 			
 			for (Task task : job) {
-				build.append("T")
+				build.append("\tT")
 					 .append(taskNumber)
 					 .append(" = ")
-					 .append(task.getType().name().toUpperCase())
+					 .append(task.getType().toString())
 					 .append(", ")
-					 .append(task.getCapacity().toString());
+					 .append(task.getCapacity().toString())
+					 .append(", [");
+				
+				/*for (Task predecessor : task.getDependencies()) {
+					build.append(predecessor)
+				}*/
+				build.append("]\n");
 				
 				// TODO: Finish that
 				

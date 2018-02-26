@@ -80,7 +80,7 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar (libraries)
 *.war
 *.ear
 *.zip
