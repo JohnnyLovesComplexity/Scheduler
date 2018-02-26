@@ -58,4 +58,9 @@ class FileGeneratorTest {
 		System.out.println("test_generateContent> box:");
 		System.out.println(FileGenerator.generateContent(box));
 	}
+	
+	@Test
+	void test_generateFile() {
+		FileGenerator.generateFile(box);
+	}
 }
