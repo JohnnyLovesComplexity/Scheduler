@@ -11,7 +11,12 @@ public class Generator {
     private static int counterTask = 0;
 
     private static Cluster generateCluster(){
-        return (Cluster) generateMachines();
+       Cluster cluster = new Cluster();
+       ArrayList<Machine> machineArray = generateMachines();
+        for (int i = 0; i < machineArray.size() ; i++) {
+            cluster.add(machineArray.get(i));
+        }
+        return cluster;
     }
 
     private static ArrayList<Machine> generateMachines() {
@@ -28,8 +33,12 @@ public class Generator {
                 Capacity capacity = new Capacity(10);
                 capacity = capacity.convertIntoCapacity(capacityValue);
 
-                Machine machine = new Machine(type, capacity);
-                list_machine.add(machine);
+                try{//temporaire
+                    Machine machine = new Machine(type, capacity);
+                    list_machine.add(machine);
+                }catch(java.lang.ArithmeticException e){
+                    System.out.println(e.getMessage());
+                }
             }
         }
         return list_machine;
@@ -44,7 +53,7 @@ public class Generator {
             Type type = machine.getType();
             Capacity capacity = generateCapacity(machine);
             ArrayList<Task> predecessor = new ArrayList<>();
-            for (int j = 0; j < r.nextInt(list_task.size()) ; j++) {
+            for (int j = 0; j < r.nextInt(list_task.size()+1) ; j++) { // +1 ?
                 Task task = list_task.get(r.nextInt(list_task.size()));
                 if(!predecessor.contains(task))
                     predecessor.add(task);
@@ -88,7 +97,7 @@ public class Generator {
 
     private static Capacity generateCapacity(Machine machine){
         Random rd = new Random();
-        int value = rd.nextInt() % (machine.getCapacity().getValue()*10 + 1);
+        long value = rd.nextLong() % (machine.getCapacity().getValue()*10 + 1);
         char scale = machine.getCapacity().getScale();
         return new Capacity(value,scale);
     }

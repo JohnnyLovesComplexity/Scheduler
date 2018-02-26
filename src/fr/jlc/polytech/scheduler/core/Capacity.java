@@ -2,14 +2,14 @@ package fr.jlc.polytech.scheduler.core;
 
 public class Capacity {
 	
-	private int value;
+	private long value;
 	private char scale;
 	
-	public Capacity(int value, char scale) {
+	public Capacity(long value, char scale) {
 		setValue(value);
 		setScale(scale);
 	}
-	public Capacity(int value) {
+	public Capacity(long value) {
 		this(value, ' ');
 	}
 	
@@ -45,36 +45,36 @@ public class Capacity {
 		if( nb0>1 ){
 			switch ((int)nb0){
 				case 3:
-					c = new Capacity((int)value/1000, 'K');
+					c = new Capacity(value/1000, 'K');
 					break;
 				case 6:
-					c = new Capacity((int)value/1000000, 'M');
+					c = new Capacity(value/1000000, 'M');
 					break;
 				case 9:
-					c = new Capacity((int)value/1000000000, 'G');
+					c = new Capacity(value/1000000000, 'G');
 					break;
 				case 12:
-					c = new Capacity((int) (value/1000000000000L), 'T');
+					c = new Capacity(value/1000000000000L, 'T');
 					break;
 				default :
-					c = new Capacity((int)value);
+					c = new Capacity(value);
 
 			}
 			return c;
 		}
 		else {
-			c = new Capacity ((int)value);
+			c = new Capacity (value);
 			return c;
 		}
 	}
 	
 	/* GETTERS & SETTERS */
 	
-	public int getValue() {
+	public long getValue() {
 		return value;
 	}
 	
-	public void setValue(int value) {
+	public void setValue(long value) {
 		if (value < 0)
 			throw new IllegalArgumentException("Capacity value must be greater or equal to 0");
 		
@@ -102,6 +102,6 @@ public class Capacity {
 	
 	@Override
 	public String toString() {
-		return Integer.toString(getValue()) + Character.toString(Character.toUpperCase(getScale()));
+		return Integer.toString(Math.toIntExact(getValue())) + Character.toString(Character.toUpperCase(getScale()));
 	}
 }
