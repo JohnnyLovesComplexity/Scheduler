@@ -42,4 +42,11 @@ public class Capacity {
 		else
 			throw new IllegalArgumentException("Scale can be ' ' (unit), 'K', 'M', 'G' or 'T'");
 	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public String toString() {
+		return Integer.toString(getValue()) + Character.toString(Character.toUpperCase(getScale()));
+	}
 }

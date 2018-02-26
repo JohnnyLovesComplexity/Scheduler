@@ -16,6 +16,7 @@ public class FileGenerator {
 		if (box == null)
 			throw new NullPointerException();
 		//
+		return true;
 	}
 	
 	public static String generateContent(@NotNull Box box) {
@@ -60,7 +61,8 @@ public class FileGenerator {
 					 .append(taskNumber)
 					 .append(" = ")
 					 .append(task.getType().name().toUpperCase())
-					 .append(", ");
+					 .append(", ")
+					 .append(task.getCapacity().toString());
 				
 				// TODO: Finish that
 				
