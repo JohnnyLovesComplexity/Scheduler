@@ -4,6 +4,7 @@ import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Contains every machine (in cluster) and every task (in job) of the current situation
@@ -102,5 +103,29 @@ public class Box {
 			else
 				getJobs().get(getJobs().size()-1).addAll(Arrays.asList(tasks));
 		}
+	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Box)) return false;
+		Box box = (Box) o;
+		return Objects.equals(getClusters(), box.getClusters()) &&
+				Objects.equals(getJobs(), box.getJobs());
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getClusters(), getJobs());
+	}
+	
+	@Override
+	public String toString() {
+		return "Box{" +
+				"clusters=" + clusters +
+				", jobs=" + jobs +
+				'}';
 	}
 }

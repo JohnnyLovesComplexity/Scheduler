@@ -26,9 +26,31 @@ class FileGeneratorTest {
 				new Machine(Type.IO, new Capacity(1, 'G'))
 		));
 		
+		Task t11 = new Task(Type.CPU, new Capacity(400, 'G'));
+		Task t12 = new Task(Type.CPU, new Capacity(9, 'T'));
+		Task t13 = new Task(Type.GPU, new Capacity(500, 'T'), t11, t12);
+		Task t14 = new Task(Type.IO, new Capacity(4, 'G'), t13);
+		
 		Job job1 = new Job(
-				new Task()
+				t11,
+				t12,
+				t13,
+				t14
 		);
+		
+		Task t21 = new Task(Type.GPU, new Capacity(800, 'G'));
+		Task t22 = new Task(Type.CPU, new Capacity(1, 'T'), t21);
+		Task t23 = new Task(Type.IO, new Capacity(4, 'G'), t22);
+		
+		Job job2 = new Job(
+				t21,
+				t22,
+				t23
+		);
+		
+		box.addJobs(job1, job2);
+		
+		System.out.println("FileGeneratorTest.setup> box: " + box.toString());
 	}
 	
 	@Test
