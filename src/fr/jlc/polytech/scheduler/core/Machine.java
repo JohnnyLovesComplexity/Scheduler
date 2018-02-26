@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Machine implements Serializable {
 	
 	public static final int CAPACITY_MIN = 0;
-	public static final int CAPACITY_MAX = 0;
+	public static final int CAPACITY_MAX = 100;
 	
 	@NotNull
 	private Type type;
