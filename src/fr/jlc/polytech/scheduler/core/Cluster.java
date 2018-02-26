@@ -7,9 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static fr.jlc.polytech.scheduler.core.Machine.CAPACITY_MAX;
-import static fr.jlc.polytech.scheduler.core.Machine.CAPACITY_MIN;
-
 public class Cluster extends ArrayList<Machine> implements Serializable {
 
     public static final int MAX_MACHINE = 100;
@@ -24,5 +21,12 @@ public class Cluster extends ArrayList<Machine> implements Serializable {
 	}
 	public Cluster(int initialCapacity) {
 		super(initialCapacity);
+	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 }

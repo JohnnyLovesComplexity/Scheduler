@@ -4,16 +4,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static fr.jlc.polytech.scheduler.core.Machine.CAPACITY_MAX;
-import static fr.jlc.polytech.scheduler.core.Machine.CAPACITY_MIN;
-
 public class Generator {
 
+    private int counterTask = 0;
 
     public Cluster generateCluster(){
-        ArrayList<Machine> list_machine = generateMachines();
-        Cluster cluster = new Cluster(list_machine);
-        return  cluster;
+        return (Cluster) generateMachines();
     }
 
     public ArrayList<Machine> generateMachines() {
@@ -23,15 +19,18 @@ public class Generator {
             int nbMachine = nb.nextInt(Cluster.MAX_MACHINE);
             for (int i = 0; i < nbMachine ; i++) {
                 Random ct = new Random();
+                /*
+                TODO: PHILIPPINE !!! CHANGE CA !! CA BUUUUG
                 int capacity = ct.nextInt() % (CAPACITY_MAX + 1 - CAPACITY_MIN) + CAPACITY_MIN;
-                Machine machine = new Machine(type, capacity);
+                Machine machine = new Machine(type, new Capacity(capacity));
                 list_machine.add(machine);
+                */
             }
         }
         return list_machine;
     }
 
-    public ArrayList<Task> generateTask(){
+    public ArrayList<Task> generateTask(Cluster list_machine){
         Random r = new Random();
         ArrayList<Task> list_task = new ArrayList<Task>();
         int nb_task = r.nextInt(10000);
@@ -50,6 +49,24 @@ public class Generator {
             list_task.add(task);
         }
         return list_task;
+    }
+
+    public ArrayList<Job> generateJob(Cluster list_machine){
+        int counterTask = 0;
+        ArrayList<Job> list_job = new ArrayList<>();
+        while(counterTask < 10000){
+
+        }
+
+        return list_job;
+    }
+
+    public Box generateBox(){
+        Cluster cluster = generateCluster();
+
+
+        Box box = new Box();
+        return box;
     }
 
     public Capacity generateCapacity(Machine machine){
