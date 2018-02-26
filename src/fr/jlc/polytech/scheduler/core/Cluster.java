@@ -22,4 +22,11 @@ public class Cluster extends ArrayList<Machine> implements Serializable {
 	public Cluster(int initialCapacity) {
 		super(initialCapacity);
 	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

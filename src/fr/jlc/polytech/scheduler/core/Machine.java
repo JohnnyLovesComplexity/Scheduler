@@ -4,6 +4,7 @@ import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Machine implements Serializable {
 
@@ -78,5 +79,32 @@ public class Machine implements Serializable {
 	
 	public void setCurrentJob(@Nullable Job currentJob) {
 		this.currentJob = currentJob;
+	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Machine)) return false;
+		Machine machine = (Machine) o;
+		return getType() == machine.getType() &&
+				Objects.equals(getCapacity(), machine.getCapacity()) &&
+				Objects.equals(getCurrentJob(), machine.getCurrentJob());
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(getType(), getCapacity(), getCurrentJob());
+	}
+	
+	@Override
+	public String toString() {
+		return "Machine{" +
+				"type=" + type +
+				", capacity=" + capacity +
+				", currentJob=" + currentJob +
+				'}';
 	}
 }

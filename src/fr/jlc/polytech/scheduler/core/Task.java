@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Task implements Serializable {
 	
@@ -87,5 +88,32 @@ public class Task implements Serializable {
 			throw new NullPointerException();
 		
 		this.dependencies = dependencies;
+	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Task)) return false;
+		Task task = (Task) o;
+		return getType() == task.getType() &&
+				Objects.equals(getCapacity(), task.getCapacity()) &&
+				Objects.equals(getDependencies(), task.getDependencies());
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(getType(), getCapacity(), getDependencies());
+	}
+	
+	@Override
+	public String toString() {
+		return "Task{" +
+				"type=" + type +
+				", capacity=" + capacity +
+				", dependencies=" + dependencies +
+				'}';
 	}
 }

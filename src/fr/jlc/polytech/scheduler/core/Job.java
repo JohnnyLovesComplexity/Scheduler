@@ -20,4 +20,11 @@ public class Job extends ArrayList<Task> implements Serializable {
 	public Job(int initialCapacity) {
 		super(initialCapacity);
 	}
+	
+	/* OVERRIDES */
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }
