@@ -25,6 +25,9 @@ public class Machine implements Serializable {
 		setCapacity(capacity);
 		setCurrentJob(currentJob);
 	}
+	public Machine(@NotNull Type type, int capacity) {
+		this(type, capacity, null);
+	}
 	
 	public boolean isOccupied() {
 		if (currentJob == null)
