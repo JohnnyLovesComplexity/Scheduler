@@ -1,6 +1,7 @@
 package fr.jlc.polytech.scheduler.core;
 
 import jdk.nashorn.internal.scripts.JO;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ public class Generator {
 
     private static Cluster generateCluster(){
        Cluster cluster = new Cluster();
+        /*
+          TODO : VALENTIN : change it into sthg that fits with your Cluster Class because I don't get it well.
+          I'd like to have a cluster created with the method generateMachines()
+         */
        ArrayList<Machine> machineArray = generateMachines();
-        for (int i = 0; i < machineArray.size() ; i++) {
-            cluster.add(machineArray.get(i));
-        }
-        return cluster;
+       cluster.addAll(machineArray);
+       return cluster;
     }
 
     private static ArrayList<Machine> generateMachines() {
@@ -33,7 +36,7 @@ public class Generator {
                 Capacity capacity = new Capacity(10);
                 capacity = capacity.convertIntoCapacity(capacityValue);
 
-                try{//temporaire
+                try{//temporary
                     Machine machine = new Machine(type, capacity);
                     list_machine.add(machine);
                 }catch(java.lang.ArithmeticException e){
@@ -53,12 +56,12 @@ public class Generator {
             Type type = machine.getType();
             Capacity capacity = generateCapacity(machine);
             ArrayList<Task> predecessor = new ArrayList<>();
-            for (int j = 0; j < r.nextInt(list_task.size()+1) ; j++) { // +1 ?
+            int a = r.nextInt(list_task.size()+1); // +1 ?
+            for (int j = 0; j < a ; j++) {
                 Task task = list_task.get(r.nextInt(list_task.size()));
                 if(!predecessor.contains(task))
                     predecessor.add(task);
             }
-
             Task task = new Task(type,capacity,predecessor);
             list_task.add(task);
         }
@@ -82,6 +85,7 @@ public class Generator {
         return list_job;
     }
 
+    @NotNull
     public static Box generateBox(){
         //For now we generate only one cluster in a box
         Cluster cluster = generateCluster();
@@ -91,10 +95,10 @@ public class Generator {
         //Jobs
         ArrayList<Job> list_job = generateJobs(cluster);
 
-        Box box = new Box(list_cluster,list_job);
-        return box;
+        return new Box(list_cluster,list_job);
     }
 
+    @NotNull
     private static Capacity generateCapacity(Machine machine){
         Random rd = new Random();
         long value = rd.nextLong() % (machine.getCapacity().getValue()*10 + 1);
