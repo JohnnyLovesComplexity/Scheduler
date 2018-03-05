@@ -126,9 +126,11 @@ public class Capacity {
 	}
 	
 	public void setValue(long value) {
-		if (value <= 0)
+		if (value <= 0){
+			System.out.println(value);
 			throw new IllegalArgumentException("Capacity value must be greater than 0");
-		
+		}
+
 		this.value = value;
 	}
 	

@@ -10,11 +10,12 @@ import java.util.Random;
 public class Generator {
 
     private static int counterTask = 0;
+    private static final int MAX_TASK = 150;
 
     private static Cluster generateCluster(){
         ArrayList<Machine> machineArray = generateMachines();
         Cluster cluster = new Cluster(machineArray);
-       return cluster;
+        return cluster;
     }
 
     private static ArrayList<Machine> generateMachines() {
@@ -28,32 +29,25 @@ public class Generator {
                 long capacityMax = type.getCapacityMax().convertIntoTrueValue();
                 long capacityMin = type.getCapacityMin().convertIntoTrueValue();
                 long capacityValue = ct.nextInt() % (capacityMax + 1 - capacityMin) + capacityMin;
-                Capacity capacity = new Capacity(10);
-                capacity = capacity.convertIntoCapacity(capacityValue);
-
-                try{//temporary
-                    Machine machine = new Machine(type, capacity);
-                    list_machine.add(machine);
-                }catch(java.lang.ArithmeticException e){
-                    System.out.println(e.getMessage());
-                }
+                Capacity capacity = Capacity.convertIntoCapacity(capacityValue);
+                Machine machine = new Machine(type, capacity);
+                list_machine.add(machine);
             }
         }
         return list_machine;
     }
 
-    private static ArrayList<Task> generateTask(Cluster list_machine){
+    private static ArrayList<Task> generateTask(Cluster list_machine,int size){
         Random r = new Random();
         ArrayList<Task> list_task = new ArrayList<Task>();
-        int nb_task = r.nextInt(10000);
-        for (int i = 0; i <nb_task ; i++) {
+        for (int i = 1; i <=size ; i++) {
             Machine machine = list_machine.get(r.nextInt(list_machine.size()));
             Type type = machine.getType();
             Capacity capacity = generateCapacity(machine);
             ArrayList<Task> predecessor = new ArrayList<>();
-            int a = r.nextInt(list_task.size()+1); // +1 ?
+            int a = r.nextInt(list_task.size()+1);
             for (int j = 0; j < a ; j++) {
-                Task task = list_task.get(r.nextInt(list_task.size()));
+                Task task = list_task.get(Math.abs(r.nextInt(list_task.size())));
                 if(!predecessor.contains(task))
                     predecessor.add(task);
             }
@@ -67,15 +61,12 @@ public class Generator {
         ArrayList<Job> list_job = new ArrayList<>();
         ArrayList<Task> list_task;
         Random rand = new Random();
-        int maxTask = rand.nextInt()%((10000 - 5000 +1)+5000);
-        while(counterTask < maxTask){
-            do{ //We can't overflow 10000 tasks for all the jobs
-                list_task = generateTask(list_machine);
-
-            }while(list_task.size() + counterTask >=maxTask);
-            Job job = (Job) list_task;
+        while(counterTask < MAX_TASK){
+            int sizeTask = Math.abs(rand.nextInt())% ((MAX_TASK - counterTask -1) +1)+1;
+            list_task = generateTask(list_machine,sizeTask);
+            Job job = new Job(list_task);
             list_job.add(job);
-            counterTask += list_task.size();
+            counterTask += sizeTask;
         }
         return list_job;
     }
@@ -96,7 +87,8 @@ public class Generator {
     @NotNull
     private static Capacity generateCapacity(Machine machine){
         Random rd = new Random();
-        long value = Math.abs(rd.nextLong()) % (machine.getCapacity().getValue()*10 + 1);
+        long a = machine.getCapacity().getValue()*10 + 1;
+        long value = Math.abs(rd.nextLong()) % a +1;
         char scale = machine.getCapacity().getScale();
         return new Capacity(value,scale);
     }

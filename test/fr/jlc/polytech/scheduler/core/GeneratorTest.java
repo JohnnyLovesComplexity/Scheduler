@@ -7,9 +7,10 @@ class GeneratorTest {
 
     @Test
     void test_generateBox() {
-        System.out.println("test_generateBox> box:");
         Box box = Generator.generateBox();
-        System.out.println(FileGenerator.generateContent(box));
+        System.out.println("test_generateBox> box:");
+        FileGenerator.generateFile(box);
+        System.out.println(FileGenerator.readContent());
     }
 
 }
