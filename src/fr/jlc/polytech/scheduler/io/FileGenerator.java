@@ -1,11 +1,10 @@
 package fr.jlc.polytech.scheduler.io;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import fr.jlc.polytech.scheduler.core.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -148,5 +147,46 @@ public class FileGenerator {
 		}
 		
 		return build.toString();
+	}
+	
+	
+	public static @Nullable Box readBox() {
+		System.out.println(readContent());
+		return null;
+	}
+	
+	public static @NotNull String readContent() {
+		StringBuilder content = new StringBuilder();
+		
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		try {
+			fr = new FileReader(path);
+			br = new BufferedReader(fr);
+			
+			String line;
+			while ((line = br.readLine()) != null)
+				content.append(line)
+						.append("\n");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+			
+			try {
+				if (fr != null)
+					fr.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		return content.toString();
 	}
 }

@@ -17,6 +17,14 @@ public class Job extends ArrayList<Task> implements Serializable {
 				if (task != null)
 					add(task);
 	}
+	public Job(@Nullable ArrayList<Task> tasks) {
+		super(tasks != null ? tasks.size() : 3);
+		
+		if (tasks != null)
+			for (Task task : tasks)
+				if (task != null)
+					add(task);
+	}
 	public Job(int initialCapacity) {
 		super(initialCapacity);
 	}

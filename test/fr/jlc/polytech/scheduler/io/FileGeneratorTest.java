@@ -63,4 +63,9 @@ class FileGeneratorTest {
 	void test_generateFile() {
 		FileGenerator.generateFile(box);
 	}
+	
+	@Test
+	void test_readContent() {
+		System.out.println("test_readContent>\n" + FileGenerator.readContent());
+	}
 }

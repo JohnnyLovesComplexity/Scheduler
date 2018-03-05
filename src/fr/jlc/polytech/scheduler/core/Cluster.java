@@ -19,6 +19,14 @@ public class Cluster extends ArrayList<Machine> implements Serializable {
 				if (machine != null)
 					add(machine);
 	}
+	public Cluster(@Nullable ArrayList<Machine> machines) {
+		super(machines != null ? machines.size() : 3);
+		
+		if (machines != null)
+			for (Machine machine : machines)
+				if (machine != null)
+					add(machine);
+	}
 	public Cluster(int initialCapacity) {
 		super(initialCapacity);
 	}
