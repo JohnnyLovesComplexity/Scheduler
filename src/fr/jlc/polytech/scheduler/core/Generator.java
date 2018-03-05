@@ -12,13 +12,8 @@ public class Generator {
     private static int counterTask = 0;
 
     private static Cluster generateCluster(){
-       Cluster cluster = new Cluster();
-        /*
-          TODO : VALENTIN : change it into sthg that fits with your Cluster Class because I don't get it well.
-          I'd like to have a cluster created with the method generateMachines()
-         */
-       ArrayList<Machine> machineArray = generateMachines();
-       cluster.addAll(machineArray);
+        ArrayList<Machine> machineArray = generateMachines();
+        Cluster cluster = new Cluster(machineArray);
        return cluster;
     }
 
@@ -72,7 +67,7 @@ public class Generator {
         ArrayList<Job> list_job = new ArrayList<>();
         ArrayList<Task> list_task;
         Random rand = new Random();
-        int maxTask = rand.nextInt()%((10000 - 50000 +1)+50000);
+        int maxTask = rand.nextInt()%((10000 - 5000 +1)+5000);
         while(counterTask < maxTask){
             do{ //We can't overflow 10000 tasks for all the jobs
                 list_task = generateTask(list_machine);
@@ -101,7 +96,7 @@ public class Generator {
     @NotNull
     private static Capacity generateCapacity(Machine machine){
         Random rd = new Random();
-        long value = rd.nextLong() % (machine.getCapacity().getValue()*10 + 1);
+        long value = Math.abs(rd.nextLong()) % (machine.getCapacity().getValue()*10 + 1);
         char scale = machine.getCapacity().getScale();
         return new Capacity(value,scale);
     }
