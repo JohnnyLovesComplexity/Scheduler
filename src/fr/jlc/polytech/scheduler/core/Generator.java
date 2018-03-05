@@ -14,7 +14,7 @@ public class Generator {
     private static Cluster generateCluster(){
         ArrayList<Machine> machineArray = generateMachines();
         Cluster cluster = new Cluster(machineArray);
-       return cluster;
+        return cluster;
     }
 
     private static ArrayList<Machine> generateMachines() {
@@ -30,6 +30,7 @@ public class Generator {
                 long capacityValue = ct.nextInt() % (capacityMax + 1 - capacityMin) + capacityMin;
                 Capacity capacity = new Capacity(10);
                 capacity = capacity.convertIntoCapacity(capacityValue);
+                System.out.println(capacity.toString());
 
                 try{//temporary
                     Machine machine = new Machine(type, capacity);
@@ -73,7 +74,7 @@ public class Generator {
                 list_task = generateTask(list_machine);
 
             }while(list_task.size() + counterTask >=maxTask);
-            Job job = (Job) list_task;
+            Job job = new Job(list_task);
             list_job.add(job);
             counterTask += list_task.size();
         }

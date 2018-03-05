@@ -57,9 +57,11 @@ public class FileGenerator {
 		if (box == null)
 			throw new NullPointerException();
 		
-		if (box.getClusters().isEmpty() || box.getJobs().isEmpty())
-			throw new IllegalArgumentException("There is no cluster nor jobs in the box.");
-		
+		if (box.getClusters().isEmpty())
+			throw new IllegalArgumentException("There is no cluster in the box.");
+		if (box.getJobs().isEmpty())
+			throw new IllegalArgumentException("There is no jobs in the box.");
+
 		StringBuilder build = new StringBuilder();
 		
 		build.append("Servers\n");

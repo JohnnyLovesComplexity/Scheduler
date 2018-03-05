@@ -99,9 +99,9 @@ public class Capacity {
 	}
 	
 	/* OVERRIDES */
-	
+
 	@Override
 	public String toString() {
-		return Integer.toString(Math.toIntExact(getValue())) + Character.toString(Character.toUpperCase(getScale()));
+		return Long.toString(getValue()) + Character.toString(Character.toUpperCase(getScale()));
 	}
 }
