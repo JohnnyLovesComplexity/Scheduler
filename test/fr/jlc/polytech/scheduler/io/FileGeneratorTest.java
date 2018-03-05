@@ -4,6 +4,8 @@ import fr.jlc.polytech.scheduler.core.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileGeneratorTest {
@@ -67,5 +69,12 @@ class FileGeneratorTest {
 	@Test
 	void test_readContent() {
 		System.out.println("test_readContent>\n" + FileGenerator.readContent());
+	}
+	
+	@Test
+	void test_readBox() {
+		Box b = FileGenerator.readBox();
+		System.out.println("test_readBox> " + b.toString());
+		System.out.println("test_readBox>\n" + FileGenerator.generateContent(b));
 	}
 }

@@ -2,6 +2,7 @@ package fr.jlc.polytech.scheduler.core;
 
 import com.sun.istack.internal.NotNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -51,6 +52,19 @@ public class Box {
 			if (cluster != null)
 				getClusters().add(cluster);
 	}
+	public void addClusters(@NotNull ArrayList<Cluster> clusters) {
+		if (clusters == null)
+			throw new NullPointerException();
+		
+		getClusters().addAll(clusters);
+	}
+	
+	public void addCluster(@NotNull Cluster cluster) {
+		if (cluster == null)
+			throw new NullPointerException();
+		
+		getClusters().add(cluster);
+	}
 	
 	/**
 	 * Add machines to the last cluster, or create a new cluster if the cluster list is empty
@@ -65,6 +79,27 @@ public class Box {
 			else
 				getClusters().get(getClusters().size()-1).addAll(Arrays.asList(machines));
 		}
+	}
+	public void addMachines(@NotNull ArrayList<Machine> machines) {
+		if (machines == null)
+			throw new NullPointerException();
+		
+		if (machines.size() > 0) {
+			if (getClusters().isEmpty())
+				getClusters().add(new Cluster(machines));
+			else
+				getClusters().get(getClusters().size()-1).addAll(machines);
+		}
+	}
+	
+	public void addMachine(@NotNull Machine machine) {
+		if (machine == null)
+			throw new NullPointerException();
+		
+		if (getClusters().isEmpty())
+			getClusters().add(new Cluster(machine));
+		else
+			getClusters().get(getClusters().size()-1).add(machine);
 	}
 	
 	public @NotNull ArrayList<Job> getJobs() {
@@ -89,6 +124,19 @@ public class Box {
 			if (job != null)
 				getJobs().add(job);
 	}
+	public void addJobs(@NotNull ArrayList<Job> jobs) {
+		if (jobs == null)
+			throw new NullPointerException();
+		
+		getJobs().addAll(jobs);
+	}
+	
+	public void addJob(@NotNull Job job) {
+		if (job == null)
+			throw new NullPointerException();
+		
+		getJobs().add(job);
+	}
 	
 	/**
 	 * Add tasks to the last job, or create a new job if the job list is empty
@@ -103,6 +151,27 @@ public class Box {
 			else
 				getJobs().get(getJobs().size()-1).addAll(Arrays.asList(tasks));
 		}
+	}
+	public void addTasks(@NotNull ArrayList<Task> tasks) {
+		if (tasks == null)
+			throw new NullPointerException();
+		
+		if (tasks.size() > 0) {
+			if (getJobs().isEmpty())
+				getJobs().add(new Job(tasks));
+			else
+				getJobs().get(getJobs().size()-1).addAll(tasks);
+		}
+	}
+	
+	public void addTask(@NotNull Task task) {
+		if (task == null)
+			throw new NullPointerException();
+		
+		if (getJobs().isEmpty())
+			getJobs().add(new Job(task));
+		else
+			getJobs().get(getJobs().size()-1).add(task);
 	}
 	
 	/* OVERRIDES */

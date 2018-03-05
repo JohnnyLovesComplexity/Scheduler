@@ -65,8 +65,59 @@ public class Capacity {
 			return c;
 		}
 	}
-
-
+	
+	/**
+	 * Parse a string to convert into a capacity
+	 * @param value Value must be a capacity like "40G", "9", "50T", "400 ", ...
+	 * @return Return the instance of the capacity
+	 * @throws UnsupportedOperationException Thrown when the string is not valid
+	 */
+	public static Capacity fromString(String value) {
+		UnsupportedOperationException exception = new UnsupportedOperationException("Unsupported format");
+		
+		boolean parseValue = true;
+		StringBuilder s_value = new StringBuilder();
+		char scale = ' ';
+		
+		for (int i = 0; i < value.length(); i++) {
+			char c = value.charAt(i);
+			
+			if (Character.isDigit(c) && parseValue)
+				s_value.append(c);
+				// If c is ' ' or a scale character...
+			else if (isScaleValid(c) && parseValue) {
+				parseValue = false;
+				scale = c;
+			}
+			else
+				throw exception;
+		}
+		
+		if (s_value.toString().length() == 0)
+			throw exception;
+		
+		long l_value;
+		
+		try {
+			l_value = Long.valueOf(s_value.toString());
+		} catch (NumberFormatException ex) {
+			throw exception;
+		}
+		
+		return new Capacity(l_value, scale);
+	}
+	
+	public static char[] getAllScales() {
+		return new char[] { ' ', 'K', 'M', 'G', 'T' };
+	}
+	
+	public static boolean isScaleValid(char c) {
+		for (char scale : getAllScales())
+			if (scale == c)
+				return true;
+		
+		return false;
+	}
 	
 	/* GETTERS & SETTERS */
 	
