@@ -1,6 +1,7 @@
 package fr.jlc.polytech.scheduler.core;
 
 import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +29,32 @@ public class Job extends ArrayList<Task> implements Serializable {
 	public Job(int initialCapacity) {
 		super(initialCapacity);
 	}
+	
+	public Capacity computeCapacity() {
+		long value = 0;
+		
+		for (Task task : this) {
+			value += task.getCapacity().convertIntoTrueValue();
+		}
+		
+		return Capacity.convertIntoCapacity(value);
+	}
+	
+	/*public void sort() {
+		int min;
+		
+		for (int i = 0; i < size() - 1; i++) {
+			min = i;
+			for (int j = i + 1; j < size(); j++) {
+				if (get(j).getCapacity().convertIntoTrueValue() < get(min).getCapacity().convertIntoTrueValue())
+					min = j;
+			}
+			
+			if (min != i) {
+				//
+			}
+		}
+	}*/
 	
 	/* OVERRIDES */
 	
