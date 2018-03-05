@@ -42,31 +42,31 @@ public class Capacity {
 
 		double nb0 = Math.log10(value);
 		Capacity c;
-		if( nb0>1 ){
-			switch ((int)nb0){
-				case 3:
-					c = new Capacity(value/1000, 'K');
-					break;
-				case 6:
-					c = new Capacity(value/1000000, 'M');
-					break;
-				case 9:
-					c = new Capacity(value/1000000000, 'G');
-					break;
-				case 12:
-					c = new Capacity(value/1000000000000L, 'T');
-					break;
-				default :
-					c = new Capacity(value);
-
-			}
+		int x =(int)nb0;
+		if(x<6) {
+			c = new Capacity(value/1000, 'K');
 			return c;
 		}
+		else if (x>=6 && x<9) {
+			c = new Capacity(value/1000000, 'M');
+			return c;
+		}
+		else if (x>=9 && x<12){
+			c = new Capacity(value/1000000000, 'G');
+			return c;
+		}
+		else if (x>=12){
+			c = new Capacity(value/1000000000000L, 'T');
+			return c;
+		}
+
 		else {
 			c = new Capacity (value);
 			return c;
 		}
 	}
+
+
 	
 	/* GETTERS & SETTERS */
 	
