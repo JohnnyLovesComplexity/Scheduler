@@ -75,8 +75,8 @@ public class Capacity {
 	}
 	
 	public void setValue(long value) {
-		if (value < 0)
-			throw new IllegalArgumentException("Capacity value must be greater or equal to 0");
+		if (value <= 0)
+			throw new IllegalArgumentException("Capacity value must be greater than 0");
 		
 		this.value = value;
 	}
