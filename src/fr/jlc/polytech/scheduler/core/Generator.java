@@ -28,16 +28,10 @@ public class Generator {
                 long capacityMax = type.getCapacityMax().convertIntoTrueValue();
                 long capacityMin = type.getCapacityMin().convertIntoTrueValue();
                 long capacityValue = ct.nextInt() % (capacityMax + 1 - capacityMin) + capacityMin;
-                Capacity capacity = new Capacity(10);
-                capacity = capacity.convertIntoCapacity(capacityValue);
+                Capacity capacity = Capacity.convertIntoCapacity(capacityValue);
                 System.out.println(capacity.toString());
-
-                try{//temporary
-                    Machine machine = new Machine(type, capacity);
-                    list_machine.add(machine);
-                }catch(java.lang.ArithmeticException e){
-                    System.out.println(e.getMessage());
-                }
+                Machine machine = new Machine(type, capacity);
+                list_machine.add(machine);
             }
         }
         return list_machine;
@@ -46,11 +40,12 @@ public class Generator {
     private static ArrayList<Task> generateTask(Cluster list_machine){
         Random r = new Random();
         ArrayList<Task> list_task = new ArrayList<Task>();
-        int nb_task = r.nextInt(10000);
+        int nb_task = r.nextInt()%(50-1+1)+1;
         for (int i = 0; i <nb_task ; i++) {
             Machine machine = list_machine.get(r.nextInt(list_machine.size()));
             Type type = machine.getType();
             Capacity capacity = generateCapacity(machine);
+            System.out.println(capacity.getValue() + " " + capacity.getScale());
             ArrayList<Task> predecessor = new ArrayList<>();
             int a = r.nextInt(list_task.size()+1); // +1 ?
             for (int j = 0; j < a ; j++) {
@@ -60,6 +55,7 @@ public class Generator {
             }
             Task task = new Task(type,capacity,predecessor);
             list_task.add(task);
+            int b = 0;
         }
         return list_task;
     }
@@ -68,12 +64,12 @@ public class Generator {
         ArrayList<Job> list_job = new ArrayList<>();
         ArrayList<Task> list_task;
         Random rand = new Random();
-        int maxTask = rand.nextInt()%((10000 - 5000 +1)+5000);
+        int maxTask = 50;
         while(counterTask < maxTask){
             do{ //We can't overflow 10000 tasks for all the jobs
                 list_task = generateTask(list_machine);
 
-            }while(list_task.size() + counterTask >=maxTask);
+            }while(list_task.size() + counterTask > maxTask);
             Job job = new Job(list_task);
             list_job.add(job);
             counterTask += list_task.size();
@@ -97,7 +93,7 @@ public class Generator {
     @NotNull
     private static Capacity generateCapacity(Machine machine){
         Random rd = new Random();
-        long value = Math.abs(rd.nextLong()) % (machine.getCapacity().getValue()*10 + 1);
+        long value = Math.abs(rd.nextLong() % (machine.getCapacity().getValue()*10 + 1));
         char scale = machine.getCapacity().getScale();
         return new Capacity(value,scale);
     }

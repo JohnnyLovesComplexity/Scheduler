@@ -38,7 +38,7 @@ public class Capacity {
 		return trueValue;
 	}
 
-	public Capacity convertIntoCapacity(long value){
+	public static Capacity convertIntoCapacity(long value){
 
 		double nb0 = Math.log10(value);
 		Capacity c;
