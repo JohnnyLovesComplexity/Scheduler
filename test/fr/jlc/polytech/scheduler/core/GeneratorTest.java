@@ -8,7 +8,8 @@ class GeneratorTest {
     @Test
     void test_generateBox() {
         System.out.println("test_generateBox> box:");
-        System.out.println(FileGenerator.generateContent(Generator.generateBox()));
+        Box box = Generator.generateBox();
+        System.out.println(FileGenerator.generateContent(box));
     }
 
 }
