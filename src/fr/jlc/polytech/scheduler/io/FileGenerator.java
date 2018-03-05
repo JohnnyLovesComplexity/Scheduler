@@ -142,8 +142,6 @@ public class FileGenerator {
 				
 				build.append("]\n");
 				
-				// TODO: Finish that
-				
 				taskNumber++;
 			}
 			
@@ -267,7 +265,7 @@ public class FileGenerator {
 				ArrayList<Machine> machines = new ArrayList<>(s_capacity.length);
 				
 				for (String sc : s_capacity) {
-					Capacity capacity = fromString(sc);
+					Capacity capacity = Capacity.fromString(sc);
 					
 					machines.add(new Machine(type, capacity));
 				}
@@ -307,7 +305,7 @@ public class FileGenerator {
 				
 				// Now, get the type, capacity and dependencies
 				c_line = line.substring(line.indexOf("=")+1);
-				String[] parameters = c_line.split(",", 3); // TODO: Might not work
+				String[] parameters = c_line.split(",", 3);
 				
 				if (parameters.length != 3)
 					throw new UnsupportedOperationException(err_format);
@@ -325,7 +323,7 @@ public class FileGenerator {
 					throw new UnsupportedOperationException(err_format);
 				
 				// Get the capacity
-				capacity = fromString(parameters[1]);
+				capacity = Capacity.fromString(parameters[1]);
 				
 				// Get the dependencies
 				parameters[2] = parameters[2].replaceAll("\\[", "");
@@ -354,61 +352,6 @@ public class FileGenerator {
 			box.addJob(job);
 		
 		return box;
-	}
-	
-	// TODO: place the 3 following methods in Capacity
-	
-	/**
-	 * Parse a string to convert into a capacity
-	 * @param value Value must be a capacity like "40G", "9", "50T", "400 ", ...
-	 * @return Return the instance of the capacity
-	 * @throws UnsupportedOperationException Thrown when the string is not valid
-	 */
-	public static Capacity fromString(String value) {
-		UnsupportedOperationException exception = new UnsupportedOperationException("Unsupported format");
-		
-		boolean parseValue = true;
-		StringBuilder s_value = new StringBuilder();
-		char scale = ' ';
-		
-		for (int i = 0; i < value.length(); i++) {
-			char c = value.charAt(i);
-			
-			if (Character.isDigit(c) && parseValue)
-				s_value.append(c);
-			// If c is ' ' or a scale character...
-			else if (isScaleValid(c) && parseValue) {
-				parseValue = false;
-				scale = c;
-			}
-			else
-				throw exception;
-		}
-		
-		if (s_value.toString().length() == 0)
-			throw exception;
-		
-		long l_value;
-		
-		try {
-			l_value = Long.valueOf(s_value.toString());
-		} catch (NumberFormatException ex) {
-			throw exception;
-		}
-		
-		return new Capacity(l_value, scale);
-	}
-	
-	public static char[] getAllScales() {
-		return new char[] { ' ', 'K', 'M', 'G', 'T' };
-	}
-	
-	public static boolean isScaleValid(char c) {
-		for (char scale : getAllScales())
-			if (scale == c)
-				return true;
-		
-		return false;
 	}
 	
 	public static @NotNull String readContent() {
