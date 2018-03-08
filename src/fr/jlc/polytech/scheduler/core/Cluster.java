@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Cluster extends ArrayList<Machine> implements Serializable {
-
-    public static final int MAX_MACHINE = 100;
 	
 	public Cluster(@Nullable Machine... machines) {
 		super(machines != null ? machines.length : 3);

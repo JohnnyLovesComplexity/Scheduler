@@ -2,15 +2,15 @@ package fr.jlc.polytech.scheduler.core;
 
 public enum Type {
 	CPU(new Capacity(8,'G'), new Capacity(40, 'G')),
-	GPU( new Capacity(11, 'T'), new Capacity(25, 'T')),
-	IO( new Capacity(1,'G'), new Capacity(8, 'G'));
-
-	private Capacity CapacityMax;
+	GPU(new Capacity(11, 'T'), new Capacity(25, 'T')),
+	IO(new Capacity(1,'G'), new Capacity(8, 'G'));
+	
 	private Capacity CapacityMin;
+	private Capacity CapacityMax;
 
-	Type(Capacity CapacityMax, Capacity CapacityMin) {
-		setCapacityMax(CapacityMax);
+	Type(Capacity CapacityMin, Capacity CapacityMax) {
 		setCapacityMin(CapacityMin);
+		setCapacityMax(CapacityMax);
 	}
 
 	public Capacity getCapacityMax() {
