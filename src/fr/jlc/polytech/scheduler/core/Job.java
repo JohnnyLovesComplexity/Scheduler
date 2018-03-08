@@ -39,7 +39,20 @@ public class Job extends ArrayList<Task> implements Serializable {
 		
 		return Capacity.convertIntoCapacity(value);
 	}
-	
+
+	public ArrayList getFirstTask (Job job) {
+        ArrayList<Task> listFirstTask = new ArrayList<>();
+        for (Task task : job) {
+            if (task.getDependencies() == null) {
+                listFirstTask.add(task);
+            }
+
+        }
+        return listFirstTask;
+    }
+
+
+
 	/*public void sort() {
 		int min;
 		
