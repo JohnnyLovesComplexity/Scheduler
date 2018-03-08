@@ -10,7 +10,7 @@ import java.util.Random;
 public class Generator {
 
     private static int counterTask = 0;
-    private static final int MAX_TASK = 150;
+    private static final int MAX_TASK = 100;
 
     private static Cluster generateCluster(){
         ArrayList<Machine> machineArray = generateMachines();
