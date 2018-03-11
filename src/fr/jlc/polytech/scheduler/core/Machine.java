@@ -80,6 +80,11 @@ public class Machine implements Serializable {
 	public void setCurrentJob(@Nullable Job currentJob) {
 		this.currentJob = currentJob;
 	}
+
+	public float computeTimeOnMachine(Task task){
+		return task.getCapacity().getValue()/this.getCapacity().getValue();
+		//The time of a given task on our machine.
+	}
 	
 	/* OVERRIDES */
 	

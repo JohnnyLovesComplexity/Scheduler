@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Job extends ArrayList<Task> implements Serializable {
 
-	
 	public Job(@Nullable Task... tasks) {
 		super(tasks != null ? tasks.length : 3);
 		
@@ -52,8 +52,7 @@ public class Job extends ArrayList<Task> implements Serializable {
     }
 
 
-
-	/*public void sort() {
+/*public void sort() {
 		int min;
 		
 		for (int i = 0; i < size() - 1; i++) {

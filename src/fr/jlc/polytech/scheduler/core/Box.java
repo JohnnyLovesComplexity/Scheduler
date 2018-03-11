@@ -5,6 +5,7 @@ import com.sun.istack.internal.NotNull;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -17,6 +18,8 @@ public class Box {
 	
 	@NotNull
 	private ArrayList<Job> jobs;
+
+    private HashMap<Task, Float> cumulateTime = new HashMap<>();
 	
 	/* CONSTRUCTORS */
 	
@@ -173,6 +176,50 @@ public class Box {
 		else
 			getJobs().get(getJobs().size()-1).add(task);
 	}
+
+    /**
+     * For each job, we want to define the
+     */
+	public void fillCumulateTime(){
+		for (Job job: this.jobs) {
+            HashMap<Task, Float> cumulateTime = new HashMap<>();
+            for (Task task: job) {
+                for (Task dependency:task.getDependencies()) {
+                    float time = computeTime(task);
+                    if(!cumulateTime.containsKey(dependency))
+                        cumulateTime.put(dependency,computeTime(dependency));
+                    else{
+                        //TODO : add also the time of the dependencies of dependencies :(
+                        float oldValue = cumulateTime.get(dependency);
+                        float newValue = oldValue + time;
+                        cumulateTime.replace(task,newValue);
+                    }
+                }
+            }
+            this.cumulateTime = cumulateTime;
+		}
+	}
+
+	public float computeTime(Task task){
+        Type taskType = task.getType();
+        Machine machine = firstType(taskType);
+        return machine.computeTimeOnMachine(task); //Time of the task on the machine
+    }
+
+    /**
+     * Return the first machine of the type given in the cluster.
+     * @param type type wanted
+     * @return Machine
+     */
+    public Machine firstType(Type type){
+        for (Machine machine: clusters.get(0)
+             ) {
+            if(machine.getType() == type)
+                return machine;
+        }
+        return null;
+    }
+
 	
 	/* OVERRIDES */
 	
