@@ -1,6 +1,6 @@
 package fr.jlc.polytech.scheduler.core;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Box {
 	@NotNull
 	private ArrayList<Job> jobs;
 
-    private HashMap<Task, Float> cumulateTime = new HashMap<>();
+    private HashMap<Task, Float> accumulateTime = new HashMap<>();
 	
 	/* CONSTRUCTORS */
 	
@@ -29,6 +29,55 @@ public class Box {
 	}
 	public Box() {
 		this(new ArrayList<>(), new ArrayList<>());
+	}
+	
+	
+	/**
+	 * For each job, we want to define the
+	 */
+	public void fillAccumulateTime(){
+		for (Job job : getJobs()) {
+			HashMap<Task, Float> accumulateTime = new HashMap<>();
+			
+			for (Task task : job) {
+				for (Task dependency : task.getDependencies()) {
+					// Compute the time that the task would take if it was computed by the first machine in the cluster of the same type as task
+					float time = computeTime(task);
+					
+					// If the dependency is already in accumulateTime, just update its value to the new computed time
+					if (!accumulateTime.containsKey(dependency))
+						accumulateTime.put(dependency, computeTime(dependency));
+					else {
+						// TODO : add also the time of the dependencies of dependencies :(
+						// TODO: Solution -> Recursive function
+						float oldValue = accumulateTime.get(dependency);
+						float newValue = oldValue + time;
+						accumulateTime.replace(task,newValue);
+					}
+				}
+			}
+			setAccumulateTime(accumulateTime);
+		}
+	}
+	
+	public float computeTime(Task task){
+		Type taskType = task.getType();
+		Machine machine = firstType(taskType);
+		return machine.computeTimeOnMachine(task); //Time of the task on the machine
+	}
+	
+	/**
+	 * Return the first machine of the type given in the cluster.
+	 * @param type type wanted
+	 * @return Machine
+	 */
+	public Machine firstType(Type type){
+		if (getClusters().size() > 0)
+			for (Machine machine : getClusters().get(0))
+				if (machine.getType() == type)
+					return machine;
+		
+		return null;
 	}
 	
 	/* GETTERS & SETTERS */
@@ -176,50 +225,21 @@ public class Box {
 		else
 			getJobs().get(getJobs().size()-1).add(task);
 	}
-
-    /**
-     * For each job, we want to define the
-     */
-	public void fillCumulateTime(){
-		for (Job job: this.jobs) {
-            HashMap<Task, Float> cumulateTime = new HashMap<>();
-            for (Task task: job) {
-                for (Task dependency:task.getDependencies()) {
-                    float time = computeTime(task);
-                    if(!cumulateTime.containsKey(dependency))
-                        cumulateTime.put(dependency,computeTime(dependency));
-                    else{
-                        //TODO : add also the time of the dependencies of dependencies :(
-                        float oldValue = cumulateTime.get(dependency);
-                        float newValue = oldValue + time;
-                        cumulateTime.replace(task,newValue);
-                    }
-                }
-            }
-            this.cumulateTime = cumulateTime;
-		}
+	
+	@NotNull
+	public HashMap<Task, Float> getAccumulateTime() {
+		if (accumulateTime == null)
+			accumulateTime = new HashMap<>();
+		
+		return accumulateTime;
 	}
-
-	public float computeTime(Task task){
-        Type taskType = task.getType();
-        Machine machine = firstType(taskType);
-        return machine.computeTimeOnMachine(task); //Time of the task on the machine
-    }
-
-    /**
-     * Return the first machine of the type given in the cluster.
-     * @param type type wanted
-     * @return Machine
-     */
-    public Machine firstType(Type type){
-        for (Machine machine: clusters.get(0)
-             ) {
-            if(machine.getType() == type)
-                return machine;
-        }
-        return null;
-    }
-
+	
+	public void setAccumulateTime(@NotNull HashMap<Task, Float> accumulateTime) {
+		if (accumulateTime == null)
+			throw new NullPointerException();
+		
+		this.accumulateTime = accumulateTime;
+	}
 	
 	/* OVERRIDES */
 	

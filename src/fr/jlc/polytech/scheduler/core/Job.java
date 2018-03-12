@@ -1,12 +1,10 @@
 package fr.jlc.polytech.scheduler.core;
 
-import com.sun.istack.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 public class Job extends ArrayList<Task> implements Serializable {
 
@@ -40,19 +38,19 @@ public class Job extends ArrayList<Task> implements Serializable {
 		return Capacity.convertIntoCapacity(value);
 	}
 
-	public ArrayList getFirstTask (Job job) {
+	@NotNull
+	public ArrayList getFirstTask(Job job) {
         ArrayList<Task> listFirstTask = new ArrayList<>();
         for (Task task : job) {
-            if (task.getDependencies() == null) {
+        	// Task.getDependencies() is always different from null
+            if (task.getDependencies().size() == 0)
                 listFirstTask.add(task);
-            }
-
         }
         return listFirstTask;
     }
 
 
-/*public void sort() {
+	/*public void sort() {
 		int min;
 		
 		for (int i = 0; i < size() - 1; i++) {

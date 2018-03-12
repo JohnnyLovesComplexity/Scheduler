@@ -49,6 +49,15 @@ public class Machine implements Serializable {
 			return false;
 	}
 	
+	/**
+	 * The time of a given task on our machine.
+	 * @param task the task that the machine would compute
+	 * @return Return the time in second that the machine would take if it computes <c>task</c>
+	 */
+	public float computeTimeOnMachine(Task task){
+		return ((float) task.getCapacity().getValue()) / ((float) this.getCapacity().getValue());
+	}
+	
 	/* GETTERS & SETTERS */
 	
 	public @NotNull Type getType() {
@@ -79,11 +88,6 @@ public class Machine implements Serializable {
 	
 	public void setCurrentJob(@Nullable Job currentJob) {
 		this.currentJob = currentJob;
-	}
-
-	public float computeTimeOnMachine(Task task){
-		return task.getCapacity().getValue()/this.getCapacity().getValue();
-		//The time of a given task on our machine.
 	}
 	
 	/* OVERRIDES */
