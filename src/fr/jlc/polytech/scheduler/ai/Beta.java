@@ -1,16 +1,18 @@
 package fr.jlc.polytech.scheduler.ai;
 
 import fr.jlc.polytech.scheduler.core.Box;
+import fr.jlc.polytech.scheduler.core.Cluster;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Beta manage a box using an advanced method (compared to Alpha) to assign jobs for the machine
  */
 public class Beta implements Method {
-    public int time; //Total processing time of all Jobs
-	
+    private int time; //Total processing time of all Jobs
+    private Cluster cluster;
+
     public Beta(){
-    
+
     }
 	
 	/**
@@ -21,6 +23,11 @@ public class Beta implements Method {
     @Override
     public float manage(@NotNull Box box) {
 	    checkBox(box);
+
+        //We consider only the first cluster
+        this.cluster = box.getClusters().get(0);
+
+
         return 0;
     }
 }

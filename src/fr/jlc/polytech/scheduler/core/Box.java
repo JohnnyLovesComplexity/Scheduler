@@ -30,33 +30,66 @@ public class Box {
 	public Box() {
 		this(new ArrayList<>(), new ArrayList<>());
 	}
-	
+
+
+	/* FUNCTIONS LINKED TO THE BETA VERSION */
 	
 	/**
-	 * For each job, we want to define the
+	 *
 	 */
 	public void fillAccumulateTime(){
 		for (Job job : getJobs()) {
-			HashMap<Task, Float> accumulateTime = new HashMap<>();
-			
-			for (Task task : job) {
-				for (Task dependency : task.getDependencies()) {
-					// Compute the time that the task would take if it was computed by the first machine in the cluster of the same type as task
-					float time = computeTime(task);
-					
-					// If the dependency is already in accumulateTime, just update its value to the new computed time
-					if (!accumulateTime.containsKey(dependency))
-						accumulateTime.put(dependency, computeTime(dependency));
-					else {
-						// TODO : add also the time of the dependencies of dependencies :(
-						// TODO: Solution -> Recursive function
-						float oldValue = accumulateTime.get(dependency);
-						float newValue = oldValue + time;
-						accumulateTime.replace(task,newValue);
-					}
-				}
+			//Here we create for each task, the list of its following task
+			HashMap<Task, ArrayList<Task>> following = findFollowingsTasks(job);
+			for (Task task: job) {
+				accumulateTime.put(task,computeAccumulateTime(following,task));
+				int a = 0;
 			}
 			setAccumulateTime(accumulateTime);
+		}
+	}
+
+
+	public HashMap<Task,ArrayList<Task>> findFollowingsTasks(Job job){
+		HashMap<Task, ArrayList<Task>> following = new HashMap<>();
+		for (Task task : job) {
+			// Compute the time that the task would take if it was computed by the first machine in the cluster of the same type as task
+			float time = computeTime(task);
+			for (Task dependency : task.getDependencies()) {
+				if (!following.containsKey(dependency)){
+					ArrayList<Task> followingTask = new ArrayList<>();
+					followingTask.add(task);
+					//We add the task to
+					following.put(dependency,followingTask);
+				}else{
+					ArrayList<Task> oldList = following.get(dependency);
+					oldList.add(task);
+					//We add this new task to the following task list
+					following.put(dependency,oldList);
+				}
+			}
+		}
+		return following;
+	}
+
+	/**
+	 * This recursive function allows to determinate the prioritary time of a task
+	 * according to its following tasks that depends of it.
+	 * @param following the tasks that depends of our task
+	 * @param task the task we consider
+	 * @return the total compute time
+	 */
+	public float computeAccumulateTime(HashMap<Task,ArrayList<Task>> following,Task task) {
+		ArrayList<Task> followingTask = following.get(task);
+		if(followingTask == null)
+			return computeTime(task);
+		else {
+			float accumulateTime = 0;
+			for (int i = 0; i < followingTask.size(); i++) {
+				if(following != null)
+					accumulateTime += computeAccumulateTime(following, followingTask.get(i));
+			}
+			return accumulateTime;
 		}
 	}
 	
@@ -78,6 +111,13 @@ public class Box {
 					return machine;
 		
 		return null;
+	}
+	
+	public void displayComputeTime(){
+		for (Float value: accumulateTime.values()) {
+			System.out.println(value);
+		}
+		//System.out.println(accumulateTime.toString());
 	}
 	
 	/* GETTERS & SETTERS */

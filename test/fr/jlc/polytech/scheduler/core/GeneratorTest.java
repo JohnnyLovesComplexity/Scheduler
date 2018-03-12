@@ -16,6 +16,8 @@ class GeneratorTest {
     @Test
     void test_generateBox() {
 	    box = Generator.generateBox();
+	    //box.fillAccumulateTime();
+		//box.displayComputeTime();
         System.out.println("test_generateBox> box:");
 	    System.out.println(FileGenerator.generateContent(box));
     }
