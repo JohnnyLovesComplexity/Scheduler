@@ -1,5 +1,6 @@
 package fr.jlc.polytech.scheduler.core.timeline;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -26,6 +27,69 @@ public class Event<T> {
 		this(null, 0, 0);
 	}
 	
+	public static boolean isValid(@NotNull Event<?> event) {
+		if (event == null)
+			throw new NullPointerException();
+		
+		return event.getStart() <= event.getEnd();
+	}
+	public boolean isValid() {
+		return isValid(this);
+	}
+	
+	public static boolean areOverlapping(@NotNull Event<?> e1, @NotNull Event<?> e2) {
+		if (e1 == null || e2 == null)
+			throw new NullPointerException();
+		
+		if (!e1.isValid())
+			throw new EventNotValidException(e1);
+		
+		if (!e2.isValid())
+			throw new EventNotValidException(e2);
+		
+		/* Check that configuration :
+		e1  ----
+		e2   ----
+		 */
+		if (e1.getStart() < e2.getStart() && e2.getStart() < e1.getEnd() && e1.getEnd() < e2.getEnd())
+			return true;
+		
+		/* Check that configuration :
+		e1    ----
+		e2 ----
+		 */
+		else if (e1.getStart() > e2.getStart() && e1.getStart() < e2.getEnd() && e1.getEnd() > e2.getEnd())
+			return true;
+		
+		/* Check that configuration :
+		e1    ----
+		e2 --------
+		 */
+		else if (e1.getStart() > e2.getStart() && e1.getStart() < e2.getEnd() && e1.getEnd() < e2.getEnd())
+			return true;
+		
+		/* Check that configuration :
+		e1  --------
+		e2    ----
+		 */
+		else if (e1.getStart() < e2.getStart() && e2.getStart() < e1.getEnd() && e1.getEnd() > e2.getEnd())
+			return true;
+		
+		/* Check that configuration :
+		e1  ----
+		e2  ----
+		 */
+		else if (e1.getStart() == e2.getStart() && e1.getEnd() == e2.getEnd())
+			return true;
+		
+		// Otherwise, the two events do not overlap
+		else
+			return false;
+	}
+	public boolean areOverlapping(@NotNull Event<?> event) {
+		return areOverlapping(this, event);
+	}
+	
 	/* GETTERS & SETTERS */
 	
 	public @Nullable T getData() {
@@ -41,12 +105,6 @@ public class Event<T> {
 	}
 	
 	public void setStart(float start) {
-		if (start < 0)
-			throw new IllegalArgumentException("Start must be greater or equal to 0.");
-		
-		if (start > end)
-			throw new IllegalArgumentException("Start cannot be placed after End.");
-		
 		this.start = start;
 	}
 	
@@ -55,12 +113,6 @@ public class Event<T> {
 	}
 	
 	public void setEnd(float end) {
-		if (end < 0)
-			throw new IllegalArgumentException("End must be greater or equal to 0.");
-		
-		if (end < start)
-			throw new IllegalArgumentException("End cannot be placed before Start.");
-		
 		this.end = end;
 	}
 	
