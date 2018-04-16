@@ -59,7 +59,7 @@ public class Timeline {
 	/* GETTERS & SETTERS */
 	
 	@NotNull
-	protected ArrayList<ArrayList<Event<?>>> getEvents() {
+	public ArrayList<ArrayList<Event<?>>> getEvents() {
 		if (events == null)
 			events = new ArrayList<>();
 		
@@ -221,7 +221,41 @@ public class Timeline {
 		
 		return builder.toString();
 	}
-	
+
+	public String toString(boolean machines) {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("Timeline");
+
+		builder.append('\n');
+
+		sort();
+
+		// Compute the number of minimal character to display the number of the timeline
+		int minChar = Integer.toString(getEvents().size()).length();
+
+		for (int i = 0; i < getEvents().size(); i++) {
+			ArrayList<Event<?>> line = getEvents().get(i);
+
+			int numLine = i + 1;
+			int nbCharNumLine = Integer.toString(numLine).length();
+
+			for (int j = 0; j < minChar - nbCharNumLine; j++)
+				builder.append(' ');
+
+			builder.append(numLine)
+					.append('|');
+
+			for (int j = 0; j < line.size(); j++) {
+				Event<?> event = line.get(j);
+				builder.append(event.toStringWithTasks());
+			}
+			builder.append('\n');
+		}
+
+		return builder.toString();
+	}
+
 	@Override
 	public String toString() {
 		return toString(null);

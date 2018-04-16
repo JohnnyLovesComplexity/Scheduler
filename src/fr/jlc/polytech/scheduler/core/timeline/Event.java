@@ -1,5 +1,6 @@
 package fr.jlc.polytech.scheduler.core.timeline;
 
+import fr.jlc.polytech.scheduler.core.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,6 +12,7 @@ public class Event<T> {
 	private T data;
 	private float start;
 	private float end;
+	private Task task;
 	
 	public Event(@Nullable T data, float start, float end) {
 		setData(data);
@@ -123,7 +125,11 @@ public class Event<T> {
 	public void setDuration(float duration) {
 		setEnd(getStart() + duration);
 	}
-	
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
 	/* OVERRIDES */
 	
 	@Override
@@ -147,6 +153,14 @@ public class Event<T> {
 				"data=" + data +
 				", start=" + start +
 				", end=" + end +
+				", task=" + task.toString() +
 				'}';
 	}
+
+	public  String toStringWithTasks(){
+	    float time = this.end - this.start;
+        return "{" +
+                task.getType() + " | " + task.getCapacity() + " | Time : " + time +
+                '}';
+    }
 }

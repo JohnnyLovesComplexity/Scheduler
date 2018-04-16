@@ -1,5 +1,6 @@
 package fr.jlc.polytech.scheduler.core.timeline;
 
+import fr.jlc.polytech.scheduler.core.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,21 +18,26 @@ public class EventBuilder<T> {
 		return this;
 	}
 	
-	public EventBuilder<T> setStart(int start) {
+	public EventBuilder<T> setStart(float start) {
 		getEvent().setStart(start);
 		return this;
 	}
 	
-	public EventBuilder<T> setEnd(int end) {
+	public EventBuilder<T> setEnd(float end) {
 		getEvent().setEnd(end);
 		return this;
 	}
 	
-	public EventBuilder<T> setDuration(int duration) {
+	public EventBuilder<T> setDuration(float duration) {
 		getEvent().setDuration(duration);
 		return this;
 	}
-	
+
+	public EventBuilder<T> setTask(Task task) {
+		getEvent().setTask(task);
+		return this;
+	}
+
 	public Event<T> createEvent() {
 		return getEvent();
 	}
