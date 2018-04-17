@@ -129,8 +129,6 @@ public class Event<T> extends EnhancedObservable implements Serializable, Clonea
 	public void setDuration(float duration) {
 		setEnd(getStart() + duration);
 	}
-
-	/* OVERRIDES */
 	
 	@Override
 	public boolean equals(Object o) {

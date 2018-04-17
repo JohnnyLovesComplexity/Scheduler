@@ -32,24 +32,30 @@ public class Beta implements Method {
     public float manage(@NotNull Box box) {
 	    checkBox(box);
 
-	    //2 VERSIONS
-        //Without the priority
-        box.initAccumulateTime();
-        //With the priority
-	    //box.fillAccumulateTime();
+	    box.fillAccumulateTime(); // compute priorities
+        initMachineTimeline(box); // associates machines with timeline lines
 
-        initMachineTimeline(box);
-
-        //We consider only the first cluster
-        //this.cluster = box.getClusters().get(0);
         while(!box.getAccumulateTime().isEmpty()){
+            //We treat the task with the longest accumulate time (priority)
             Task taskToTreat = maxTask(box.getAccumulateTime());
+
+            //Now we can treat the task
             int lineToPut = bestLineTimeline(taskToTreat);
             float timeToCompute = this.machines.get(lineToPut).computeTimeOnMachine(taskToTreat);
 
-            //We add a new event cooresponding to the current task
             float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
+            //We compare this start time to the time that the dependencies need to finish
+            float max = maxTimeDependencies(taskToTreat);
+            start = Math.max(start,max +1);
 
+            //Optimisation : if the place after the predecessor is empty we put the the task here.
+            int line = maxLineDependencies(max);
+            if(line != -1){
+                if(start == max && machines.get(line).getType() == taskToTreat.getType())
+                    lineToPut = line;
+            }
+
+            //We add a new event cooresponding to the current task
             this.timeline.addEvent(lineToPut, new EventBuilder<Task>()
                     .setStart(start)
                     .setEnd(start + timeToCompute)
@@ -140,6 +146,37 @@ public class Beta implements Method {
         }
 
         return max;
+    }
+
+    /**
+     * The task has to begin after its dependencies are finished. In this case we find and return the end of the longest dependence task.
+     * @param task
+     * @return float[] max et ligne de la timeline du max
+     */
+    private float maxTimeDependencies(Task task){
+        float max = 0;
+        float end;
+        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+            for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
+                if(task.getDependencies().contains((Task) this.timeline.getEvents().get(i).get(j).getData())) {
+                    end = this.timeline.getEvents().get(i).get(j).getEnd();
+                    if(end > max)
+                        max = end;
+                }
+
+            }
+        }
+        return max;
+    }
+
+    private int maxLineDependencies(float max){
+        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+            for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
+                if(this.timeline.getEvents().get(i).get(j).getEnd() == max)
+                    return i;
+            }
+        }
+        return -1;
     }
 
 }

@@ -29,19 +29,19 @@ class BetaTest {
 
         Task t11 = new Task(Type.CPU, new Capacity(400, 'G'));
         Task t12 = new Task(Type.CPU, new Capacity(500, 'G'));
-        Task t13 = new Task(Type.GPU, new Capacity(5, 'T'), t11, t12);
+        Task t13 = new Task(Type.GPU, new Capacity(100, 'G'), t11, t12);
         Task t14 = new Task(Type.IO, new Capacity(2, 'G'), t13);
         Task t15 = new Task(Type.IO, new Capacity(20, 'G'), t13);
         Task t16 = new Task(Type.IO, new Capacity(30, 'G'), t13);
         Task t17 = new Task(Type.CPU, new Capacity(150, 'G'), t13);
-        Task t18 = new Task(Type.CPU, new Capacity(600, 'G'), t13);
-        Task t19 = new Task(Type.CPU, new Capacity(600, 'G'), t13,t17);
-        Task t110 = new Task(Type.CPU, new Capacity(600, 'G'), t17);
-        Task t111 = new Task(Type.CPU, new Capacity(200, 'G'), t14);
+        Task t18 = new Task(Type.CPU, new Capacity(160, 'G'), t13);
+        Task t19 = new Task(Type.CPU, new Capacity(170, 'G'), t13,t17);
+        Task t110 = new Task(Type.CPU, new Capacity(180, 'G'), t17);
+        Task t111 = new Task(Type.CPU, new Capacity(210, 'G'), t14);
         Task t112 = new Task(Type.CPU, new Capacity(300, 'G'), t15,t14,t13);
         Task t113 = new Task(Type.CPU, new Capacity(200, 'G'), t13,t12);
-        Task t114 = new Task(Type.IO, new Capacity(100, 'G'), t15);
-        Task t115 = new Task(Type.IO, new Capacity(150, 'G'), t17,t112,t113);
+        Task t114 = new Task(Type.IO, new Capacity(10, 'G'), t15);
+        Task t115 = new Task(Type.IO, new Capacity(20, 'G'), t17,t112,t113);
         Task t116 = new Task(Type.IO, new Capacity(50, 'G'), t11,t115);
 
         Job job1 = new Job(
@@ -63,7 +63,7 @@ class BetaTest {
                 t116
         );
 
-        Task t21 = new Task(Type.GPU, new Capacity(800, 'G'));
+        Task t21 = new Task(Type.GPU, new Capacity(200, 'G'));
         Task t22 = new Task(Type.CPU, new Capacity(1, 'T'), t21);
         Task t23 = new Task(Type.IO, new Capacity(7, 'G'), t22);
         Task t24 = new Task(Type.IO, new Capacity(5, 'G'), t21);
