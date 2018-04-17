@@ -226,7 +226,7 @@ public class Timeline extends EnhancedObservable implements Serializable, Clonea
 		return builder.toString();
 	}
 
-	/*public String toString(boolean machines) {
+	public String toStringWithTasks() {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("Timeline");
@@ -250,15 +250,14 @@ public class Timeline extends EnhancedObservable implements Serializable, Clonea
 			builder.append(numLine)
 					.append('|');
 
-			for (int j = 0; j < line.size(); j++) {
-				Event<?> event = line.get(j);
+			for (Event<?> event : line) {
 				builder.append(event.toStringWithTasks());
 			}
 			builder.append('\n');
 		}
 
 		return builder.toString();
-	}*/
+	}
 
 	@Override
 	public String toString() {

@@ -90,7 +90,4 @@ class BetaTest {
         beta.manage(box);
     }
 
-    public Beta getBeta() {
-        return beta;
-    }
 }

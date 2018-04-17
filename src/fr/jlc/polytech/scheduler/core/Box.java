@@ -3,10 +3,7 @@ package fr.jlc.polytech.scheduler.core;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Contains every machine (in cluster) and every task (in job) of the current situation
@@ -19,7 +16,7 @@ public class Box {
 	@NotNull
 	private ArrayList<Job> jobs;
 
-    private HashMap<Task, Float> accumulateTime = new HashMap<>();
+    private LinkedHashMap<Task, Float> accumulateTime = new LinkedHashMap<>();
 	
 	/* CONSTRUCTORS */
 	
@@ -100,9 +97,10 @@ public class Box {
 		}
 	}
 	
-	public float computeTime(Task task){
+	private float computeTime(Task task){
 		Type taskType = task.getType();
 		Machine machine = firstType(taskType);
+		assert machine != null;
 		return machine.computeTimeOnMachine(task); //Time of the task on the machine
 	}
 	
@@ -111,7 +109,7 @@ public class Box {
 	 * @param type type wanted
 	 * @return Machine
 	 */
-	public Machine firstType(Type type){
+	private Machine firstType(Type type){
 		if (getClusters().size() > 0)
 			for (Machine machine : getClusters().get(0))
 				if (machine.getType() == type)
@@ -132,7 +130,7 @@ public class Box {
 	public @NotNull ArrayList<Cluster> getClusters() {
 		if (this.clusters == null)
 			this.clusters = new ArrayList<>();
-		
+
 		return this.clusters;
 	}
 	
@@ -274,14 +272,14 @@ public class Box {
 	}
 	
 	@NotNull
-	public HashMap<Task, Float> getAccumulateTime() {
+	public LinkedHashMap<Task, Float> getAccumulateTime() {
 		if (accumulateTime == null)
-			accumulateTime = new HashMap<>();
+			accumulateTime = new LinkedHashMap<>();
 		
 		return accumulateTime;
 	}
 	
-	public void setAccumulateTime(@NotNull HashMap<Task, Float> accumulateTime) {
+	public void setAccumulateTime(@NotNull LinkedHashMap<Task, Float> accumulateTime) {
 		if (accumulateTime == null)
 			throw new NullPointerException();
 		

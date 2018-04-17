@@ -154,11 +154,12 @@ public class Event<T> extends EnhancedObservable implements Serializable, Clonea
 				'}';
 	}
 	
-	/*
+
 	public  String toStringWithTasks(){
 	    float time = this.end - this.start;
-        return "{" +
+		Task task = (Task) data;
+		return "{" +
                 task.getType() + " | " + task.getCapacity() + " | Time : " + time +
                 '}';
-    }*/
+    }
 }

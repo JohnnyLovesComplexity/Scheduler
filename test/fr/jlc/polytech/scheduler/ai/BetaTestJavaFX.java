@@ -1,7 +1,6 @@
 package fr.jlc.polytech.scheduler.ai;
 
 import fr.jlc.polytech.scheduler.core.*;
-import fr.jlc.polytech.scheduler.core.timeline.EventBuilder;
 import fr.jlc.polytech.scheduler.core.timeline.TimelineController;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
 import javafx.application.Application;
@@ -18,12 +17,14 @@ public class BetaTestJavaFX extends Application {
     public void start(Stage primaryStage) throws Exception {
         BorderPane bp_main = new BorderPane();
         setup();
-        Beta beta = new Beta();
 
+        //Timeline generation
+        Beta beta = new Beta();
         //box = Generator.generateBox();
         System.out.println(FileGenerator.generateContent(box));
         beta.manage(box);
 
+        //JavaFX
         TimelineController timeline = new TimelineController();
 
         timeline.setTimeline(beta.getTimeline());

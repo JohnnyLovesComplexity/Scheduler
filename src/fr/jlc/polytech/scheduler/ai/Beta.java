@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
 public class Beta implements Method {
     private float time; //Total processing time of all Jobs
     private Timeline timeline;
-    private HashMap<Integer,Machine> machines = new HashMap<>();
+    private LinkedHashMap<Integer,Machine> machines = new LinkedHashMap<>();
 
     public Beta(){
 
@@ -68,16 +69,16 @@ public class Beta implements Method {
 
 
         //afficher la timeline
-        System.out.println(timeline.toString("Version Beta : "));
-        //System.out.println(timeline.toString(true));
-        System.out.println("Temps total = " + getTime());
+        System.out.println(timeline.toString("Beta Version : "));
+        System.out.println(timeline.toStringWithTasks());
+        System.out.println("Total time = " + getTime());
 
         return getTime();
     }
 
     /**
      * Return the best line of the timeline where we can put our task depending on its compute time. The shorter time.
-     * @param task
+     * @param task The task that we consider.
      * @return int Index of the line.
      */
     private int bestLineTimeline(Task task){
@@ -149,7 +150,7 @@ public class Beta implements Method {
 
     /**
      * The task has to begin after its dependencies are finished. In this case we find and return the end of the longest dependence task.
-     * @param task
+     * @param task The task that we consider.
      * @return float[] max et ligne de la timeline du max
      */
     private float maxTimeDependencies(Task task){
