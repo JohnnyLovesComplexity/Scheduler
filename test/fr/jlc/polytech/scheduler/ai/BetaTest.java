@@ -34,10 +34,10 @@ class BetaTest {
         Task t15 = new Task(Type.IO, new Capacity(20, 'G'), t13);
         Task t16 = new Task(Type.IO, new Capacity(30, 'G'), t13);
         Task t17 = new Task(Type.CPU, new Capacity(150, 'G'), t13);
-        Task t18 = new Task(Type.CPU, new Capacity(150, 'G'), t13);
-        Task t19 = new Task(Type.CPU, new Capacity(150, 'G'), t13,t17);
-        Task t110 = new Task(Type.CPU, new Capacity(150, 'G'), t17);
-        Task t111 = new Task(Type.CPU, new Capacity(200, 'G'), t14);
+        Task t18 = new Task(Type.CPU, new Capacity(160, 'G'), t13);
+        Task t19 = new Task(Type.CPU, new Capacity(170, 'G'), t13,t17);
+        Task t110 = new Task(Type.CPU, new Capacity(180, 'G'), t17);
+        Task t111 = new Task(Type.CPU, new Capacity(210, 'G'), t14);
         Task t112 = new Task(Type.CPU, new Capacity(300, 'G'), t15,t14,t13);
         Task t113 = new Task(Type.CPU, new Capacity(200, 'G'), t13,t12);
         Task t114 = new Task(Type.IO, new Capacity(10, 'G'), t15);

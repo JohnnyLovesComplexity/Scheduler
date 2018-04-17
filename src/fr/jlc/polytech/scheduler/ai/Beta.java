@@ -46,9 +46,9 @@ public class Beta implements Method {
             //We treat the task with the longest accumulate time (priority)
             Task taskToTreat = maxTask(box.getAccumulateTime());
 
-            //Our task is a priority task: in this case we must treat its dependencies if they have not been processed yet.
-            if(!dependenciesDone(taskToTreat))
-                treatDependencies(taskToTreat,box);
+            //Alpha : Our task is a priority task: in this case we must treat its dependencies if they have not been processed yet.
+            /*if(!dependenciesDone(taskToTreat))
+                treatDependencies(taskToTreat,box);*/
 
             //Now we can treat the task
             int lineToPut = bestLineTimeline(taskToTreat);
@@ -57,7 +57,7 @@ public class Beta implements Method {
             float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
             //We compare this start time to the time that the dependencies need to finish
             float max = maxTimeDependencies(taskToTreat);
-            start = Math.max(start,max);
+            start = Math.max(start,max +1);
 
             //Optimisation : if the place after the predecessor is empty we put the the task here.
             int line = maxLineDependencies(max);

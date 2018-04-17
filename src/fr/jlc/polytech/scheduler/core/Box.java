@@ -87,16 +87,15 @@ public class Box {
 	 * @param task the task we consider
 	 * @return the total compute time
 	 */
-	public float computeAccumulateTime(HashMap<Task,ArrayList<Task>> following,Task task) {
+    private float computeAccumulateTime(HashMap<Task, ArrayList<Task>> following, Task task) {
 		ArrayList<Task> followingTask = following.get(task);
 		if(followingTask == null)
 			return computeTime(task);
 		else {
 			float accumulateTime = 0;
-			for (int i = 0; i < followingTask.size(); i++) {
-				if(following != null)
-					accumulateTime += computeAccumulateTime(following, followingTask.get(i));
-			}
+            for (Task aFollowingTask : followingTask) {
+                accumulateTime += computeAccumulateTime(following, aFollowingTask);
+            }
 			return accumulateTime;
 		}
 	}
