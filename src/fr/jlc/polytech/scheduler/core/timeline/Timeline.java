@@ -1,14 +1,14 @@
 package fr.jlc.polytech.scheduler.core.timeline;
 
+import fr.berger.beyondcode.util.EnhancedObservable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
-public class Timeline {
+public class Timeline extends EnhancedObservable implements Serializable, Cloneable {
 	
 	/**
 	 * ArrayList of ArrayList of Event
@@ -46,6 +46,7 @@ public class Timeline {
 					return 1;
 			}
 		});
+		snap(this.events);
 	}
 	public void sort(int timelineIndex) {
 		checkTimelineIndex(timelineIndex);
@@ -71,6 +72,7 @@ public class Timeline {
 			throw new NullPointerException();
 		
 		this.events = events;
+		snap(this.events);
 	}
 	
 	public int addTimeline(@NotNull ArrayList<Event<?>> events) {
@@ -89,6 +91,7 @@ public class Timeline {
 		
 		int index = getEvents().size();
 		getEvents().add(events);
+		snap(getEvents());
 		
 		return index;
 	}
@@ -112,6 +115,7 @@ public class Timeline {
 		}
 		
 		// Otherwise, add the event
+		event.addObserver((observable, o) -> snap(o));
 		getEvents().get(timelineIndex).add(event);
 		
 		// Sort the list
@@ -222,7 +226,7 @@ public class Timeline {
 		return builder.toString();
 	}
 
-	public String toString(boolean machines) {
+	/*public String toString(boolean machines) {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("Timeline");
@@ -254,7 +258,7 @@ public class Timeline {
 		}
 
 		return builder.toString();
-	}
+	}*/
 
 	@Override
 	public String toString() {

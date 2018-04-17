@@ -12,5 +12,6 @@
     <orderEntry type="library" name="annotations-java8" level="project" />
     <orderEntry type="library" name="apiguardian-api-1.0.0" level="project" />
     <orderEntry type="library" name="EnhancedList" level="project" />
+    <orderEntry type="library" name="BeyondCode" level="project" />
   </component>
 </module>

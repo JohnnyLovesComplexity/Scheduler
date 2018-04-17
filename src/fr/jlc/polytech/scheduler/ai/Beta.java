@@ -50,11 +50,11 @@ public class Beta implements Method {
             //We add a new event cooresponding to the current task
             float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
 
-            this.timeline.addEvent(lineToPut, new EventBuilder<String>()
+            this.timeline.addEvent(lineToPut, new EventBuilder<Task>()
                     .setStart(start)
                     .setEnd(start + timeToCompute)
                     .setDuration(timeToCompute)
-                    .setTask(taskToTreat)
+                    .setData(taskToTreat)
                     .createEvent());
 
             box.getAccumulateTime().remove(taskToTreat); //We remove the task that we have treated
@@ -63,7 +63,7 @@ public class Beta implements Method {
 
         //afficher la timeline
         System.out.println(timeline.toString("Version Beta : "));
-        System.out.println(timeline.toString(true));
+        //System.out.println(timeline.toString(true));
         System.out.println("Temps total = " + getTime());
 
         //Modfier le temps = prendre la timeline la plus longue et retourner sa fin

@@ -33,11 +33,6 @@ public class EventBuilder<T> {
 		return this;
 	}
 
-	public EventBuilder<T> setTask(Task task) {
-		getEvent().setTask(task);
-		return this;
-	}
-
 	public Event<T> createEvent() {
 		return getEvent();
 	}

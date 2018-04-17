@@ -1,18 +1,19 @@
 package fr.jlc.polytech.scheduler.core.timeline;
 
+import fr.berger.beyondcode.util.EnhancedObservable;
 import fr.jlc.polytech.scheduler.core.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Event<T> {
+public class Event<T> extends EnhancedObservable implements Serializable, Cloneable {
 	
 	@Nullable
 	private T data;
 	private float start;
 	private float end;
-	private Task task;
 	
 	public Event(@Nullable T data, float start, float end) {
 		setData(data);
@@ -100,6 +101,7 @@ public class Event<T> {
 	
 	public void setData(@Nullable T data) {
 		this.data = data;
+		snap(this.data);
 	}
 	
 	public float getStart() {
@@ -108,6 +110,7 @@ public class Event<T> {
 	
 	public void setStart(float start) {
 		this.start = start;
+		snap(this.start);
 	}
 	
 	public float getEnd() {
@@ -116,6 +119,7 @@ public class Event<T> {
 	
 	public void setEnd(float end) {
 		this.end = end;
+		snap(this.end);
 	}
 	
 	public float getDuration() {
@@ -124,10 +128,6 @@ public class Event<T> {
 	
 	public void setDuration(float duration) {
 		setEnd(getStart() + duration);
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
 	}
 
 	/* OVERRIDES */
@@ -153,14 +153,14 @@ public class Event<T> {
 				"data=" + data +
 				", start=" + start +
 				", end=" + end +
-				", task=" + task.toString() +
 				'}';
 	}
-
+	
+	/*
 	public  String toStringWithTasks(){
 	    float time = this.end - this.start;
         return "{" +
                 task.getType() + " | " + task.getCapacity() + " | Time : " + time +
                 '}';
-    }
+    }*/
 }
