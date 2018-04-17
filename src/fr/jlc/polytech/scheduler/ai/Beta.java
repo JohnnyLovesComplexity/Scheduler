@@ -59,8 +59,14 @@ public class Beta implements Method {
             float max = maxTimeDependencies(taskToTreat);
             start = Math.max(start,max);
 
-            //We add a new event cooresponding to the current task
+            //Optimisation : if the place after the predecessor is empty we put the the task here.
+            int line = maxLineDependencies(max);
+            if(line != -1){
+                if(start == max && machines.get(line).getType() == taskToTreat.getType())
+                    lineToPut = line;
+            }
 
+            //We add a new event cooresponding to the current task
             this.timeline.addEvent(lineToPut, new EventBuilder<String>()
                     .setStart(start)
                     .setEnd(start + timeToCompute)
@@ -176,7 +182,7 @@ public class Beta implements Method {
     /**
      * The task has to begin after its dependencies are finished. In this case we find and return the end of the longest dependence task.
      * @param task
-     * @return float
+     * @return float[] max et ligne de la timeline du max
      */
     private float maxTimeDependencies(Task task){
         float max = 0;
@@ -192,6 +198,16 @@ public class Beta implements Method {
             }
         }
         return max;
+    }
+
+    private int maxLineDependencies(float max){
+        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+            for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
+                if(this.timeline.getEvents().get(i).get(j).getEnd() == max)
+                    return i;
+            }
+        }
+        return -1;
     }
 
     private void treatDependencies(Task task, Box box){
