@@ -130,7 +130,11 @@ public class Event<T> {
 		this.task = task;
 	}
 
-	/* OVERRIDES */
+    public Task getTask() {
+        return task;
+    }
+
+    /* OVERRIDES */
 	
 	@Override
 	public boolean equals(Object o) {

@@ -34,21 +34,32 @@ public class Beta implements Method {
 
 	    //2 VERSIONS
         //Without the priority
-        box.initAccumulateTime();
+        //box.initAccumulateTime();
         //With the priority
-	    //box.fillAccumulateTime();
+	    box.fillAccumulateTime();
 
         initMachineTimeline(box);
 
         //We consider only the first cluster
         //this.cluster = box.getClusters().get(0);
         while(!box.getAccumulateTime().isEmpty()){
+            //We treat the task with the longest accumulate time (priority)
             Task taskToTreat = maxTask(box.getAccumulateTime());
+
+            //Our task is a priority task: in this case we must treat its dependencies if they have not been processed yet.
+            if(!dependenciesDone(taskToTreat))
+                treatDependencies(taskToTreat,box);
+
+            //Now we can treat the task
             int lineToPut = bestLineTimeline(taskToTreat);
             float timeToCompute = this.machines.get(lineToPut).computeTimeOnMachine(taskToTreat);
 
-            //We add a new event cooresponding to the current task
             float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
+            //We compare this start time to the time that the dependencies need to finish
+            float max = maxTimeDependencies(taskToTreat);
+            start = Math.max(start,max);
+
+            //We add a new event cooresponding to the current task
 
             this.timeline.addEvent(lineToPut, new EventBuilder<String>()
                     .setStart(start)
@@ -140,6 +151,67 @@ public class Beta implements Method {
         }
 
         return max;
+    }
+
+    /**
+     * Return true if all the task that our task depends of have been done.
+     * @param task
+     * @return
+     */
+    private boolean dependenciesDone(Task task){
+        for (Task taskPred: task.getDependencies()) {
+            boolean trouve = false;
+            for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+                for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
+                    if(this.timeline.getEvents().get(i).get(j).getTask().equals(taskPred))
+                        trouve = true;
+                }
+            }
+            if(!trouve)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * The task has to begin after its dependencies are finished. In this case we find and return the end of the longest dependence task.
+     * @param task
+     * @return float
+     */
+    private float maxTimeDependencies(Task task){
+        float max = 0;
+        float end;
+        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+            for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
+                if(task.getDependencies().contains(this.timeline.getEvents().get(i).get(j).getTask())){
+                    end = this.timeline.getEvents().get(i).get(j).getEnd();
+                    if(end > max)
+                        max = end;
+                }
+
+            }
+        }
+        return max;
+    }
+
+    private void treatDependencies(Task task, Box box){
+
+        for (Task taskPred: task.getDependencies()) {
+            int lineToPut = bestLineTimeline(taskPred);
+            float timeToCompute = this.machines.get(lineToPut).computeTimeOnMachine(taskPred);
+
+            //We add a new event cooresponding to the current task
+            float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
+
+            this.timeline.addEvent(lineToPut, new EventBuilder<String>()
+                    .setStart(start)
+                    .setEnd(start + timeToCompute)
+                    .setDuration(timeToCompute)
+                    .setTask(taskPred)
+                    .createEvent());
+
+            box.getAccumulateTime().remove(taskPred); //We remove the task
+        }
     }
 
 }
