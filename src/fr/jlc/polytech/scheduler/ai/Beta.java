@@ -1,17 +1,14 @@
 package fr.jlc.polytech.scheduler.ai;
 
 import fr.jlc.polytech.scheduler.core.Box;
-import fr.jlc.polytech.scheduler.core.Cluster;
 import fr.jlc.polytech.scheduler.core.Machine;
 import fr.jlc.polytech.scheduler.core.Task;
-import fr.jlc.polytech.scheduler.core.timeline.Event;
 import fr.jlc.polytech.scheduler.core.timeline.EventBuilder;
 import fr.jlc.polytech.scheduler.core.timeline.Timeline;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -34,7 +31,13 @@ public class Beta implements Method {
     @Override
     public float manage(@NotNull Box box) {
 	    checkBox(box);
-	    box.fillAccumulateTime();
+
+	    //2 VERSIONS
+        //Without the priority
+        box.initAccumulateTime();
+        //With the priority
+	    //box.fillAccumulateTime();
+
         initMachineTimeline(box);
 
         //We consider only the first cluster
@@ -61,6 +64,7 @@ public class Beta implements Method {
         //afficher la timeline
         System.out.println(timeline.toString("Version Beta : "));
         System.out.println(timeline.toString(true));
+        System.out.println("Temps total = " + getTime());
 
         //Modfier le temps = prendre la timeline la plus longue et retourner sa fin
         return 0;
@@ -74,14 +78,12 @@ public class Beta implements Method {
     private int bestLineTimeline(Task task){
         int indexMin = 0;
         if(!timeline.getEvents().isEmpty()){
-            float min = (this.timeline.getEvents().get(0).isEmpty())?
-                    0:this.timeline.getEvents().get(0).get(this.timeline.getEvents().get(0).size()-1).getEnd() + this.machines.get(0).computeTimeOnMachine(task);
-            for (int i = 1; i < this.timeline.getEvents().size() ; i++) {
+            float min = 50000;
+            for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
                 if(this.machines.get(i).getType() != task.getType())
                     continue;
-                int size = this.timeline.getEvents().get(i).size();
-                float computeTime = this.machines.get(i).computeTimeOnMachine(task); //compute time of our task on the machine corresponding to the line
-                float newTime = (this.timeline.getEvents().get(i).isEmpty())? 0:this.timeline.getEvents().get(i).get(size-1).getEnd()+computeTime;
+
+                float newTime = getLineTime(task, i);
                 if(newTime < min){
                     indexMin = i;
                     min = newTime;
@@ -91,18 +93,26 @@ public class Beta implements Method {
         return indexMin;
     }
 
+    private float getLineTime(Task task, int i) {
+        int size = this.timeline.getEvents().get(i).size();
+        float computeTime = this.machines.get(i).computeTimeOnMachine(task); //compute time of our task on the machine corresponding to the line
+        return (this.timeline.getEvents().get(i).isEmpty())? 0: this.timeline.getEvents().get(i).get(size-1).getEnd()+computeTime;
+    }
+
     /**
      * The Task with the maximum compute time of our list.
      * @param map HashMap of our tasks as key with their compute time as value.
      * @return Task
      */
     private Task maxTask(HashMap<Task, Float> map){
+        float maxValueInMap=(Collections.max(map.values()));
         Set cles = map.keySet();
         Task maxTask = null;
-        float max = 0;
         for (Object cle : cles) {
-            if(map.get(cle)>max)
-                maxTask = (Task) cle; // tu peux typer plus finement ici
+            if(map.get(cle) == maxValueInMap){
+                maxTask = (Task) cle;
+                break;
+            }
         }
         return maxTask;
     }
@@ -117,6 +127,19 @@ public class Beta implements Method {
             this.machines.put(i,box.getClusters().get(0).get(i));
             this.timeline.addTimeline();
         }
+    }
+
+    private float getTime(){
+        float max = 0;
+        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+            int size = this.timeline.getEvents().get(i).size();
+            float lineTime = (this.timeline.getEvents().get(i).isEmpty())? 0: this.timeline.getEvents().get(i).get(size-1).getEnd();
+            if(lineTime > max){
+                max = lineTime;
+            }
+        }
+
+        return max;
     }
 
 }

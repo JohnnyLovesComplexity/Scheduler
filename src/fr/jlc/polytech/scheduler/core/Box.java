@@ -43,11 +43,19 @@ public class Box {
 			HashMap<Task, ArrayList<Task>> following = findFollowingsTasks(job);
 			for (Task task: job) {
 				accumulateTime.put(task,computeAccumulateTime(following,task));
-				int a = 0;
 			}
 			setAccumulateTime(accumulateTime);
 		}
 	}
+
+    public void initAccumulateTime(){
+        for (Job job : getJobs()) {
+            for (Task task: job) {
+                accumulateTime.put(task,1F);
+            }
+            setAccumulateTime(accumulateTime);
+        }
+    }
 
 
 	public HashMap<Task,ArrayList<Task>> findFollowingsTasks(Job job){

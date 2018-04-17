@@ -21,9 +21,6 @@ class GeneratorTest {
 		//box.displayComputeTime();
         System.out.println("test_generateBox> box:");
 	    System.out.println(FileGenerator.generateContent(box));
-
-		Beta beta = new Beta();
-		beta.manage(box);
 	}
 
 }
