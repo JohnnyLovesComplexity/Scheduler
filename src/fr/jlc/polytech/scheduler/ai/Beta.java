@@ -32,23 +32,12 @@ public class Beta implements Method {
     public float manage(@NotNull Box box) {
 	    checkBox(box);
 
-	    //2 VERSIONS
-        //Without the priority
-        //box.initAccumulateTime();
-        //With the priority
-	    box.fillAccumulateTime();
+	    box.fillAccumulateTime(); // compute priorities
+        initMachineTimeline(box); // associates machines with timeline lines
 
-        initMachineTimeline(box);
-
-        //We consider only the first cluster
-        //this.cluster = box.getClusters().get(0);
         while(!box.getAccumulateTime().isEmpty()){
             //We treat the task with the longest accumulate time (priority)
             Task taskToTreat = maxTask(box.getAccumulateTime());
-
-            //Alpha : Our task is a priority task: in this case we must treat its dependencies if they have not been processed yet.
-            /*if(!dependenciesDone(taskToTreat))
-                treatDependencies(taskToTreat,box);*/
 
             //Now we can treat the task
             int lineToPut = bestLineTimeline(taskToTreat);
@@ -160,26 +149,6 @@ public class Beta implements Method {
     }
 
     /**
-     * Return true if all the task that our task depends of have been done.
-     * @param task
-     * @return
-     */
-    private boolean dependenciesDone(Task task){
-        for (Task taskPred: task.getDependencies()) {
-            boolean trouve = false;
-            for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
-                for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
-                    if(this.timeline.getEvents().get(i).get(j).getTask().equals(taskPred))
-                        trouve = true;
-                }
-            }
-            if(!trouve)
-                return false;
-        }
-        return true;
-    }
-
-    /**
      * The task has to begin after its dependencies are finished. In this case we find and return the end of the longest dependence task.
      * @param task
      * @return float[] max et ligne de la timeline du max
@@ -208,26 +177,6 @@ public class Beta implements Method {
             }
         }
         return -1;
-    }
-
-    private void treatDependencies(Task task, Box box){
-
-        for (Task taskPred: task.getDependencies()) {
-            int lineToPut = bestLineTimeline(taskPred);
-            float timeToCompute = this.machines.get(lineToPut).computeTimeOnMachine(taskPred);
-
-            //We add a new event cooresponding to the current task
-            float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
-
-            this.timeline.addEvent(lineToPut, new EventBuilder<String>()
-                    .setStart(start)
-                    .setEnd(start + timeToCompute)
-                    .setDuration(timeToCompute)
-                    .setTask(taskPred)
-                    .createEvent());
-
-            box.getAccumulateTime().remove(taskPred); //We remove the task
-        }
     }
 
 }
