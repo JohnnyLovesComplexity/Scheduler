@@ -72,8 +72,7 @@ public class Beta implements Method {
         //System.out.println(timeline.toString(true));
         System.out.println("Temps total = " + getTime());
 
-        //Modfier le temps = prendre la timeline la plus longue et retourner sa fin
-        return 0;
+        return getTime();
     }
 
     /**
@@ -179,4 +178,7 @@ public class Beta implements Method {
         return -1;
     }
 
+    public Timeline getTimeline() {
+        return timeline;
+    }
 }

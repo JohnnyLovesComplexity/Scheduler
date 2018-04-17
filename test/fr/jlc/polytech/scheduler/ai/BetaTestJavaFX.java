@@ -1,19 +1,48 @@
 package fr.jlc.polytech.scheduler.ai;
 
 import fr.jlc.polytech.scheduler.core.*;
+import fr.jlc.polytech.scheduler.core.timeline.EventBuilder;
+import fr.jlc.polytech.scheduler.core.timeline.TimelineController;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
-import org.junit.jupiter.api.BeforeEach;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class BetaTest {
-
+public class BetaTestJavaFX extends Application {
     private Box box;
-    private Beta beta;
 
-    @BeforeEach
-    void setup() {
+    @Override
+    @Test
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane bp_main = new BorderPane();
+        setup();
+        Beta beta = new Beta();
+
+        //box = Generator.generateBox();
+        System.out.println(FileGenerator.generateContent(box));
+        beta.manage(box);
+
+        TimelineController timeline = new TimelineController();
+
+        timeline.setTimeline(beta.getTimeline());
+        bp_main.setCenter(timeline.getView());
+
+
+        primaryStage.setTitle("TimelineBetaTest");
+        primaryStage.setScene(new Scene(bp_main));
+        primaryStage.show();
+
+        timeline.update();
+    }
+
+    @Test
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public void setup() {
         box = new Box();
         box.getClusters().add(new Cluster(
                 new Machine(Type.CPU, new Capacity(40, 'G')),
@@ -77,20 +106,6 @@ class BetaTest {
         );
 
         box.addJobs(job1, job2);
-        }
-
-
-    @Test
-    void test_manage() {
-        beta = new Beta();
-
-        //box = Generator.generateBox();
-
-        System.out.println(FileGenerator.generateContent(box));
-        beta.manage(box);
     }
 
-    public Beta getBeta() {
-        return beta;
-    }
 }
