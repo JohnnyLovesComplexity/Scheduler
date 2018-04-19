@@ -13,8 +13,6 @@ public class Scheduling {
     protected Timeline timeline;
     protected HashMap<Integer,Machine> machines = new HashMap<>();
 
-
-
     /**
      * Return the best line of the timeline where we can put our task depending on its compute time. The shorter time.
      * @param task
