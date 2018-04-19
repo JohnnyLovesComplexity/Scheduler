@@ -111,21 +111,9 @@ public class Alpha extends Scheduling implements Method {
 	private void treatDependencies(Task task, Box box){
 
 		for (Task taskPred: task.getDependencies()) {
-			int lineToPut = bestLineTimeline(taskPred);
-			float timeToCompute = this.machines.get(lineToPut).computeTimeOnMachine(taskPred);
-
-			//We add a new event cooresponding to the current task
-			float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
-
-
-			this.timeline.addEvent(lineToPut, new EventBuilder<Task>()
-					.setStart(start)
-					.setEnd(start + timeToCompute)
-					.setDuration(timeToCompute)
-					.setData(taskPred)
-					.createEvent());
-
-			box.getAccumulateTime().remove(taskPred); //We remove the task
+            if(!dependenciesDone(taskPred))
+                treatDependencies(taskPred,box);
+			treatTask(box,taskPred);
 		}
 	}
 

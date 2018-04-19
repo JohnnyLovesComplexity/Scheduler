@@ -116,12 +116,12 @@ public class Scheduling {
         float max = maxTimeDependencies(taskToTreat);
         start = Math.max(start,max +1);
 
-        //Optimisation : if the place after the predecessor is empty we put the the task here.
-        int line = maxLineDependencies(max);
+        //Optimisation ? if the place after the predecessor is empty we put the the task here.
+        /*int line = maxLineDependencies(max);
         if(line != -1){
             if(start == max && machines.get(line).getType() == taskToTreat.getType())
                 lineToPut = line;
-        }
+        }*/
 
         //We add a new event cooresponding to the current task
         this.timeline.addEvent(lineToPut, new EventBuilder<Task>()
