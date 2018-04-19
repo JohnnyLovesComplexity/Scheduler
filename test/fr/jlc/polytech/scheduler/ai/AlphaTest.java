@@ -1,24 +1,22 @@
 package fr.jlc.polytech.scheduler.ai;
 
-import fr.jlc.polytech.scheduler.core.*;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BetaTest extends SchedulingTest{
+class AlphaTest extends SchedulingTest{
 
-    private Beta beta;
+    private Alpha alpha;
 
     @Test
     void test_manage() {
-        beta = new Beta();
+        alpha = new Alpha();
 
         //box = Generator.generateBox();
 
         System.out.println(FileGenerator.generateContent(box));
-        beta.manage(box);
+        alpha.manage(box);
     }
 
 }
