@@ -56,6 +56,19 @@ public class Timeline extends EnhancedObservable implements Serializable, Clonea
 		for (ArrayList<Event<?>> eventArrayList : getEvents())
 			sort(eventArrayList);
 	}
+
+	public float maxLine(){
+		float max = 0;
+		for (int i = 0; i < this.getEvents().size() ; i++) {
+
+			int size = this.getEvents().get(i).size();
+			float lineTime = (this.getEvents().get(i).isEmpty())? 0: this.getEvents().get(i).get(size-1).getEnd();
+			if(lineTime > max)
+				max = lineTime;
+
+		}
+		return max;
+	}
 	
 	/* GETTERS & SETTERS */
 	

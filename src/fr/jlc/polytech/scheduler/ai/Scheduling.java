@@ -12,6 +12,9 @@ import java.util.HashMap;
 public class Scheduling {
     protected Timeline timeline;
     protected HashMap<Integer,Machine> machines = new HashMap<>();
+    protected int maxLineDependencies;
+    private float time; //Total processing time of all Jobs
+
 
     /**
      * Return the best line of the timeline where we can put our task depending on its compute time. The shorter time.
@@ -19,13 +22,22 @@ public class Scheduling {
      * @return int Index of the line.
      */
     protected int bestLineTimeline(Task task){
+        float max = 0;
         int indexMin = 0;
         if(!timeline.getEvents().isEmpty()){
+
             float min = 50000;
             for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+
+                //We take this opportunity to update the total time of the timeline.
+                int size = this.timeline.getEvents().get(i).size();
+                float lineTime = (this.timeline.getEvents().get(i).isEmpty())? 0: this.timeline.getEvents().get(i).get(size-1).getEnd();
+                if(lineTime > max)
+                    max = lineTime;
+
+                //Best Line
                 if(this.machines.get(i).getType() != task.getType())
                     continue;
-
                 float newTime = getLineTime(task, i);
                 if(newTime < min){
                     indexMin = i;
@@ -33,6 +45,7 @@ public class Scheduling {
                 }
             }
         }
+        this.time = max;
         return indexMin;
     }
 
@@ -68,8 +81,10 @@ public class Scheduling {
             for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
                 if(task.getDependencies().contains((Task) this.timeline.getEvents().get(i).get(j).getData())) {
                     end = this.timeline.getEvents().get(i).get(j).getEnd();
-                    if(end > max)
+                    if(end > max){
                         max = end;
+                        maxLineDependencies = i;
+                    }
                 }
 
             }
@@ -77,31 +92,8 @@ public class Scheduling {
         return max;
     }
 
-    /**
-     * Total processing time of all jobs.
-     * @return float
-     */
-    protected float getTime(){
-        float max = 0;
-        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
-            int size = this.timeline.getEvents().get(i).size();
-            float lineTime = (this.timeline.getEvents().get(i).isEmpty())? 0: this.timeline.getEvents().get(i).get(size-1).getEnd();
-            if(lineTime > max){
-                max = lineTime;
-            }
-        }
-
-        return max;
-    }
-
-    protected int maxLineDependencies(float max){
-        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
-            for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
-                if(this.timeline.getEvents().get(i).get(j).getEnd() == max)
-                    return i;
-            }
-        }
-        return -1;
+    public float getTime() {
+        return time;
     }
 
     protected void treatTask(@NotNull Box box, Task taskToTreat) {

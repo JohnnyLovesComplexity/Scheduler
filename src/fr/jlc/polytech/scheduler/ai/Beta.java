@@ -16,7 +16,6 @@ import java.util.Set;
  * Beta manage a box using an advanced method (compared to Alpha) to assign jobs for the machine
  */
 public class Beta extends Scheduling implements Method {
-    private float time; //Total processing time of all Jobs
 
     public Beta(){
 

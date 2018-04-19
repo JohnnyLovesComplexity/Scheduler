@@ -28,8 +28,11 @@ public class TimelineView extends Group implements Serializable, Cloneable {
 		
 		if (timeline.getEvents() == null)
 			throw new NullPointerException();
-		
-		Canvas canvas = new Canvas(640, 480);
+
+		/**
+		 * TODO : See how to do better : width -> depending of the total processing time (can be higher)
+		 */
+		Canvas canvas = new Canvas(4000, 480);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		
 		for (int i = 0, maxi = timeline.getEvents().size(); i < maxi; i++) {

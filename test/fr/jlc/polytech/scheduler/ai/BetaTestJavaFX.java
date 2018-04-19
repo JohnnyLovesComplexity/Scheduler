@@ -20,7 +20,7 @@ public class BetaTestJavaFX extends Application {
 
         //Timeline generation
         Beta beta = new Beta();
-        //box = Generator.generateBox();
+        box = Generator.generateBox();
         System.out.println(FileGenerator.generateContent(box));
         beta.manage(box);
 
