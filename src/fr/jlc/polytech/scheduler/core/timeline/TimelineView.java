@@ -3,11 +3,7 @@ package fr.jlc.polytech.scheduler.core.timeline;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -32,7 +28,8 @@ public class TimelineView extends Group implements Serializable, Cloneable {
 		/**
 		 * TODO : See how to do better : width -> depending of the total processing time (can be higher)
 		 */
-		Canvas canvas = new Canvas(4000, 480);
+
+		Canvas canvas = new Canvas((double)timeline.maxLine()*10, 480);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		
 		for (int i = 0, maxi = timeline.getEvents().size(); i < maxi; i++) {
