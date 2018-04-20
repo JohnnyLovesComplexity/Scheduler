@@ -30,7 +30,7 @@ public class Beta extends Scheduling implements Method {
     public float manage(@NotNull Box box) {
 	    checkBox(box);
 
-	    box.fillAccumulateTime(); // compute priorities
+	    box.fillAccumulateTime(); // compute priorities --> The specificity of BETA
         initMachineTimeline(box); // associates machines with timeline lines
 
         while(!box.getAccumulateTime().isEmpty()){
@@ -41,7 +41,7 @@ public class Beta extends Scheduling implements Method {
         }
 
 
-        //afficher la timeline
+        //print the timeline
         System.out.println(timeline.toString("Beta Version : "));
         System.out.println(timeline.toStringWithTasks());
         System.out.println("Total time = " + getTime());
@@ -51,8 +51,8 @@ public class Beta extends Scheduling implements Method {
 
 
     /**
-     * The Task with the maximum compute time of our list.
-     * @param map HashMap of our tasks as key with their compute time as value.
+     * The Task with the maximum cumulate time priority of our list.
+     * @param map HashMap of our tasks as key with their accumulate time as value.
      * @return Task
      */
     private Task maxTask(HashMap<Task, Float> map){

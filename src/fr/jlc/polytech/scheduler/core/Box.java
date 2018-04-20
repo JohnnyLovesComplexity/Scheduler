@@ -32,7 +32,7 @@ public class Box {
 	/* FUNCTIONS LINKED TO THE BETA VERSION */
 	
 	/**
-	 *
+	 * Fill the accumulate time variable with the priority of each task.
 	 */
 	public void fillAccumulateTime(){
 		for (Job job : getJobs()) {
@@ -45,6 +45,9 @@ public class Box {
 		}
 	}
 
+	/**
+	 * Fill the accumulate time variable in the case we don't need the priority.
+	 */
     public void initAccumulateTime(){
         for (Job job : getJobs()) {
             for (Task task: job) {
@@ -55,23 +58,23 @@ public class Box {
     }
 
 
+	/**
+	 * Find the following task within the job for each task.
+	 * @param job the job considered
+	 * @return
+	 */
 	public HashMap<Task,ArrayList<Task>> findFollowingsTasks(Job job){
 		HashMap<Task, ArrayList<Task>> following = new HashMap<>();
 		for (Task task : job) {
-			// Compute the time that the task would take if it was computed by the first machine in the cluster of the same type as task
+			// Compute the time that the task would take if it was computed by the first machine in the cluster (of the same type)
 			float time = computeTime(task);
 			for (Task dependency : task.getDependencies()) {
-				if (!following.containsKey(dependency)){
-					ArrayList<Task> followingTask = new ArrayList<>();
-					followingTask.add(task);
-					//We add the task to
-					following.put(dependency,followingTask);
-				}else{
 					ArrayList<Task> oldList = following.get(dependency);
+					if(oldList==null)
+                        oldList = new ArrayList<>();
 					oldList.add(task);
 					//We add this new task to the following task list
 					following.put(dependency,oldList);
-				}
 			}
 		}
 		return following;
@@ -96,7 +99,12 @@ public class Box {
 			return accumulateTime;
 		}
 	}
-	
+
+	/**
+	 * The compute time is finded depending on the same machines (depending on the type)
+	 * @param task
+	 * @return
+	 */
 	private float computeTime(Task task){
 		Type taskType = task.getType();
 		Machine machine = firstType(taskType);

@@ -18,7 +18,11 @@ class BetaTest extends SchedulingTest{
         //box = Generator.generateBox();
 
         System.out.println(FileGenerator.generateContent(box));
+
+
+        long debut = System.currentTimeMillis();
         beta.manage(box);
+        System.out.println("Execution Time Beta : " + (System.currentTimeMillis()-debut) + " ms");
     }
 
 }

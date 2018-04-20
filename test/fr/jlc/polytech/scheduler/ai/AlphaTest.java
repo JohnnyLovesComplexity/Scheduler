@@ -16,7 +16,10 @@ class AlphaTest extends SchedulingTest{
         //box = Generator.generateBox();
 
         System.out.println(FileGenerator.generateContent(box));
+
+        long debut = System.currentTimeMillis();
         alpha.manage(box);
+        System.out.println("Execution Time Beta : " + (System.currentTimeMillis() - debut) + " ms");
     }
 
 }

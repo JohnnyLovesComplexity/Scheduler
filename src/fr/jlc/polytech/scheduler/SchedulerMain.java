@@ -14,7 +14,14 @@ public class SchedulerMain {
     }
 
     public static void main(String[] args) {
+
+        // We generate a new box of clusters
         box = Generator.generateBox();
+
+        //Or we read one from a file
+        //box = FileGenerator.readBox();
+
+
         System.out.println(FileGenerator.generateContent(box));
 
         Beta beta = new Beta();
