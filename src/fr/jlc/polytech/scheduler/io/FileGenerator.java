@@ -1,8 +1,8 @@
 package fr.jlc.polytech.scheduler.io;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import fr.jlc.polytech.scheduler.core.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ public class FileGenerator {
 	
 	@SuppressWarnings("Duplicates")
 	public static boolean generateFile(@NotNull Box box) {
+		//noinspection ConstantConditions
 		if (box == null)
 			throw new NullPointerException();
 		
@@ -55,19 +56,33 @@ public class FileGenerator {
 		return !problem;
 	}
 	
+	/**
+	 * Generate the string content of the box.
+	 * @param box The box to transform into string.
+	 * @return The string representation of the box
+	 */
+	@SuppressWarnings("DanglingJavadoc")
+	@NotNull
 	public static String generateContent(@NotNull Box box) {
+		//noinspection ConstantConditions
 		if (box == null)
 			throw new NullPointerException();
 		
+		// At least one of the two lists must contain something
 		if (!((box.getClusters().isEmpty() && !box.getJobs().isEmpty()) ||
 			 (!box.getClusters().isEmpty() && box.getJobs().isEmpty()) ||
 			 (!box.getClusters().isEmpty() && !box.getJobs().isEmpty())))
 			throw new IllegalArgumentException("There is no cluster nor jobs in the box.");
 		
+		/**
+		 * The string builder
+		 */
 		StringBuilder build = new StringBuilder();
 		
+		// Begin with servers
 		build.append("Servers\n");
-
+		
+		// For each types, list the servers available in "box" with this type
 		for (Type type : Type.values()) {
 			build.append("\t")
 				 .append(type.toString())
@@ -82,9 +97,11 @@ public class FileGenerator {
 				}
 			}
 			
-			// Delete last ", "
-			build.deleteCharAt(build.length()-1);
-			build.deleteCharAt(build.length()-1);
+			// Delete last ", " (last 2 characters)
+			if (box.getClusters().size() > 0) {
+				build.deleteCharAt(build.length() - 1);
+				build.deleteCharAt(build.length() - 1);
+			}
 			
 			build.append("]\n");
 		}
@@ -92,13 +109,15 @@ public class FileGenerator {
 		int jobNumber = 1;
 		int taskNumber;
 		int nbrOfTasks =0;
+		
+		// For each job in the box
 		for (Job job : box.getJobs()) {
 			build.append("Job ")
 				 .append(jobNumber)
 				 .append(" = [");
 			
 			
-			// Each task will be affacted to a value, such as 'T1', 't2', ...
+			// Each task will be affected to a value, such as 'T1', 't2', ...
 			HashMap<Task, String> tasks = new HashMap<>();
 			
 			taskNumber = 1;
@@ -113,8 +132,10 @@ public class FileGenerator {
 			}
 			
 			// Delete last ", "
-			build.deleteCharAt(build.length()-1);
-			build.deleteCharAt(build.length()-1);
+			if (tasks.values().size() > 0) {
+				build.deleteCharAt(build.length() - 1);
+				build.deleteCharAt(build.length() - 1);
+			}
 			
 			build.append("]\n");
 			
@@ -130,13 +151,14 @@ public class FileGenerator {
 					 .append(", [");
 				
 				
+				// Build the dependencies according to "tasks" HashMap.
 				for (Task predecessor : task.getDependencies()) {
 					build.append(tasks.get(predecessor))
 						 .append(", ");
 				}
 				
+				// Delete last ", " if there were at least one dependencies written
 				if (task.getDependencies().size() > 0) {
-					// Delete last ", "
 					build.deleteCharAt(build.length() - 1);
 					build.deleteCharAt(build.length() - 1);
 				}
