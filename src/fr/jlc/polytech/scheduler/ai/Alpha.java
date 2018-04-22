@@ -64,8 +64,8 @@ public class Alpha extends Scheduling implements Method {
 		//}
 
         //afficher la timeline
-        System.out.println(timeline.toString("Beta Version : "));
-        System.out.println(timeline.toStringWithTasks());
+        //System.out.println(timeline.toString("Beta Version : "));
+        //System.out.println(timeline.toStringWithTasks());
         System.out.println("Total time = " + getTime());
 		
 		return getTime();

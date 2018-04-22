@@ -6,6 +6,8 @@ import fr.jlc.polytech.scheduler.core.Box;
 import fr.jlc.polytech.scheduler.core.Generator;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
 
+import java.util.concurrent.TimeUnit;
+
 public class SchedulerMain {
 
     private static Box box;
@@ -35,5 +37,13 @@ public class SchedulerMain {
         alpha.manage(box);
         System.out.println("Execution Time Alpha : " + (System.currentTimeMillis()-debut) + " ms");
 
+    }
+
+    public static String toSeconds(long millis){
+        return String.format("%02d min, %02d sec",
+                TimeUnit.MILLISECONDS.toMinutes(millis),
+                TimeUnit.MILLISECONDS.toSeconds(millis) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+        );
     }
 }

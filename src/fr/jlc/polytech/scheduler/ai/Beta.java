@@ -42,8 +42,8 @@ public class Beta extends Scheduling implements Method {
 
 
         //print the timeline
-        System.out.println(timeline.toString("Beta Version : "));
-        System.out.println(timeline.toStringWithTasks());
+        //System.out.println(timeline.toString("Beta Version : "));
+        //System.out.println(timeline.toStringWithTasks());
         System.out.println("Total time = " + getTime());
 
         return getTime();
@@ -68,8 +68,4 @@ public class Beta extends Scheduling implements Method {
         return maxTask;
     }
 
-
-    public Timeline getTimeline() {
-        return timeline;
-    }
 }

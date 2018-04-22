@@ -67,7 +67,7 @@ public class FileGenerator {
 		StringBuilder build = new StringBuilder();
 		
 		build.append("Servers\n");
-		
+
 		for (Type type : Type.values()) {
 			build.append("\t")
 				 .append(type.toString())
@@ -91,6 +91,7 @@ public class FileGenerator {
 		
 		int jobNumber = 1;
 		int taskNumber;
+		int nbrOfTasks =0;
 		for (Job job : box.getJobs()) {
 			build.append("Job ")
 				 .append(jobNumber)
@@ -146,8 +147,12 @@ public class FileGenerator {
 			}
 			
 			jobNumber++;
+			nbrOfTasks += taskNumber - 1;
 		}
-		
+		build.append("Number total of tasks = ")
+				.append(nbrOfTasks)
+				.append("\n");
+
 		return build.toString();
 	}
 	

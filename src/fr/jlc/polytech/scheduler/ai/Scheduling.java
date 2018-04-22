@@ -124,5 +124,7 @@ public class Scheduling {
         box.getAccumulateTime().remove(taskToTreat); //We remove the task that we have treated
     }
 
-
+    public Timeline getTimeline() {
+        return timeline;
+    }
 }

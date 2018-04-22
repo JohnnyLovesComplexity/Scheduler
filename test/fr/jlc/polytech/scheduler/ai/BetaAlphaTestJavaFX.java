@@ -6,10 +6,17 @@ import fr.jlc.polytech.scheduler.io.FileGenerator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 
-public class BetaTestJavaFX extends Application {
+import java.awt.*;
+
+public class BetaAlphaTestJavaFX extends Application {
     private Box box;
 
     @Override
@@ -20,22 +27,49 @@ public class BetaTestJavaFX extends Application {
 
         //Timeline generation
         Beta beta = new Beta();
+        Alpha alpha = new Alpha();
+
+        //Generated content version
         //box = Generator.generateBox();
-        System.out.println(FileGenerator.generateContent(box));
+        //System.out.println(FileGenerator.generateContent(box));
+
+        //Ungenerated version (To comment when we generate Box)
+        Text config = new Text(FileGenerator.generateContent(box));
+        bp_main.setRight(config);
+        //Text timelineTxt = new Text(beta.getTimeline().toStringWithTasks());
+        //bp_main.setBottom(timelineTxt);
+
+
+
         beta.manage(box);
+        alpha.manage(box);
 
         //JavaFX
-        TimelineController timeline = new TimelineController();
+        TimelineController timelineBeta = new TimelineController();
+        TimelineController timelineAlpha = new TimelineController();
 
-        timeline.setTimeline(beta.getTimeline());
-        bp_main.setCenter(timeline.getView());
+        GridPane gridPane = new GridPane();
+        timelineBeta.setTimeline(beta.getTimeline());
+        timelineAlpha.setTimeline(alpha.getTimeline());
+        gridPane.add(timelineBeta.getView(),0,1);
+        gridPane.add(timelineAlpha.getView(),0,2);
+
+        bp_main.setCenter(gridPane);
+
+        Text title = new Text("Timeline");
+        title.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        title.setFill(Color.MEDIUMPURPLE);
+        bp_main.setTop(title);
+
+
 
 
         primaryStage.setTitle("TimelineBetaTest");
         primaryStage.setScene(new Scene(bp_main));
         primaryStage.show();
 
-        timeline.update();
+        timelineBeta.update();
+        timelineAlpha.update();
     }
 
     @Test
