@@ -53,20 +53,10 @@ public class Alpha extends Scheduling implements Method {
         }
 
 
-		/*for (Job job : box.getJobs()) {
-			// If job is not null and not empty...
-			if (job != null && !job.isEmpty()) {
-				//... Then assign this job to a machine
-				/* TODO: Find a solution at the following problem :
-				* A job contains tasks that have al a different type. We cannot assign a job to machine.
-				*/
-		//	}
-		//}
-
         //afficher la timeline
-        //System.out.println(timeline.toString("Beta Version : "));
+        //System.out.println(timeline.toString("Alpha Version : "));
         //System.out.println(timeline.toStringWithTasks());
-        System.out.println("Total time = " + getTime());
+        System.out.println("Total time Alpha = " + getTime());
 		
 		return getTime();
 	}

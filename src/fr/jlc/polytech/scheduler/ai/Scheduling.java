@@ -7,7 +7,9 @@ import fr.jlc.polytech.scheduler.core.timeline.EventBuilder;
 import fr.jlc.polytech.scheduler.core.timeline.Timeline;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Scheduling {
     protected Timeline timeline;

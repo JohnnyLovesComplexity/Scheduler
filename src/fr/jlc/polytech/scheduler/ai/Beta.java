@@ -44,7 +44,7 @@ public class Beta extends Scheduling implements Method {
         //print the timeline
         //System.out.println(timeline.toString("Beta Version : "));
         //System.out.println(timeline.toStringWithTasks());
-        System.out.println("Total time = " + getTime());
+        System.out.println("Total time Beta = " + getTime());
 
         return getTime();
     }

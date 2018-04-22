@@ -149,9 +149,9 @@ public class FileGenerator {
 			jobNumber++;
 			nbrOfTasks += taskNumber - 1;
 		}
-		build.append("Number total of tasks = ")
+		/*build.append("Number total of tasks = ")
 				.append(nbrOfTasks)
-				.append("\n");
+				.append("\n");*/ //Incompatible with file generator
 
 		return build.toString();
 	}

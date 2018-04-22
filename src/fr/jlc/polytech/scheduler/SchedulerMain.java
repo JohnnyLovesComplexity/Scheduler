@@ -2,6 +2,7 @@ package fr.jlc.polytech.scheduler;
 
 import fr.jlc.polytech.scheduler.ai.Alpha;
 import fr.jlc.polytech.scheduler.ai.Beta;
+import fr.jlc.polytech.scheduler.ai.Gamma;
 import fr.jlc.polytech.scheduler.core.Box;
 import fr.jlc.polytech.scheduler.core.Generator;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
@@ -18,16 +19,18 @@ public class SchedulerMain {
     public static void main(String[] args) {
 
         // We generate a new box of clusters
-        box = Generator.generateBox();
+        //box = Generator.generateBox();
+        //FileGenerator.generateFile(box);
 
         //Or we read one from a file
-        //box = FileGenerator.readBox();
+        box = FileGenerator.readBox();
 
 
         System.out.println(FileGenerator.generateContent(box));
 
         Beta beta = new Beta();
         Alpha alpha = new Alpha();
+        Gamma gamma = new Gamma();
 
         long debut = System.currentTimeMillis();
         beta.manage(box);
@@ -36,6 +39,10 @@ public class SchedulerMain {
         debut = System.currentTimeMillis();
         alpha.manage(box);
         System.out.println("Execution Time Alpha : " + (System.currentTimeMillis()-debut) + " ms");
+
+        debut = System.currentTimeMillis();
+        gamma.manage(box);
+        System.out.println("Execution Time Gamma : " + (System.currentTimeMillis()-debut) + " ms");
 
     }
 

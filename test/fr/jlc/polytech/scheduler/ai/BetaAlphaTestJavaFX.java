@@ -36,13 +36,16 @@ public class BetaAlphaTestJavaFX extends Application {
         //Ungenerated version (To comment when we generate Box)
         Text config = new Text(FileGenerator.generateContent(box));
         bp_main.setRight(config);
-        //Text timelineTxt = new Text(beta.getTimeline().toStringWithTasks());
-        //bp_main.setBottom(timelineTxt);
+        /*Text timelineTxt = new Text(beta.getTimeline().toStringWithTasks());
+        bp_main.setBottom(timelineTxt);*/
 
-
-
+        long debut = System.currentTimeMillis();
         beta.manage(box);
+        System.out.println("Execution Time Beta : " + (System.currentTimeMillis()-debut) + " ms");
+
+        debut = System.currentTimeMillis();
         alpha.manage(box);
+        System.out.println("Execution Time Alpha : " + (System.currentTimeMillis()-debut) + " ms");
 
         //JavaFX
         TimelineController timelineBeta = new TimelineController();
@@ -62,9 +65,7 @@ public class BetaAlphaTestJavaFX extends Application {
         bp_main.setTop(title);
 
 
-
-
-        primaryStage.setTitle("TimelineBetaTest");
+        primaryStage.setTitle("TimelineTest");
         primaryStage.setScene(new Scene(bp_main));
         primaryStage.show();
 

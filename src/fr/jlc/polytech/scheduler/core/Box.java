@@ -57,7 +57,6 @@ public class Box {
         }
     }
 
-
 	/**
 	 * Find the following task within the job for each task.
 	 * @param job the job considered
