@@ -27,17 +27,22 @@ public class Gamma extends Scheduling implements Method {
 	public float manage(@NotNull Box box) {
 		checkBox(box);
 
-		box.fillAccumulateTime();
+		checkBox(box);
+
 		initMachineTimeline(box); // associates machines with timeline lines
-
-		Random random = new Random();
-
+		for (int i = 0; i < box.getJobs().size() ; i++) {
+			for (int j = 0; j < box.getJobs().get(i).size() ; j++) {
+				Task taskToTreat = box.getJobs().get(i).get(j);
+				treatTask(box, taskToTreat);
+			}
+		}
 
 		//afficher la timeline
-		//System.out.println(timeline.toString("Gamma Version : "));
-		//System.out.println(timeline.toStringWithTasks());
-		//System.out.println("Total time = " + getTime());
+		System.out.println(timeline.toString("Gamma Version : "));
+		System.out.println(timeline.toStringWithTasks());
+		System.out.println("Total time Gamma = " + getTime());
 
 		return getTime();
+
 	}
 }

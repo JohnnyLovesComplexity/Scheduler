@@ -1,5 +1,6 @@
 package fr.jlc.polytech.scheduler.ai;
 
+import fr.jlc.polytech.scheduler.core.Generator;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class GammaTest extends SchedulingTest{
     void test_manage() {
         gamma = new Gamma();
 
-        //box = Generator.generateBox();
+        box = Generator.generateBox();
         System.out.println(FileGenerator.generateContent(box));
 
         long debut = System.currentTimeMillis();

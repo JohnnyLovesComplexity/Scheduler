@@ -30,12 +30,12 @@ public class BetaAlphaTestJavaFX extends Application {
         Alpha alpha = new Alpha();
 
         //Generated content version
-        //box = Generator.generateBox();
-        //System.out.println(FileGenerator.generateContent(box));
+        box = Generator.generateBox();
+        System.out.println(FileGenerator.generateContent(box));
 
         //Ungenerated version (To comment when we generate Box)
-        Text config = new Text(FileGenerator.generateContent(box));
-        bp_main.setRight(config);
+        //Text config = new Text(FileGenerator.generateContent(box));
+        //bp_main.setRight(config);
         /*Text timelineTxt = new Text(beta.getTimeline().toStringWithTasks());
         bp_main.setBottom(timelineTxt);*/
 
@@ -58,12 +58,6 @@ public class BetaAlphaTestJavaFX extends Application {
         gridPane.add(timelineAlpha.getView(),0,2);
 
         bp_main.setCenter(gridPane);
-
-        Text title = new Text("Timeline");
-        title.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-        title.setFill(Color.MEDIUMPURPLE);
-        bp_main.setTop(title);
-
 
         primaryStage.setTitle("TimelineTest");
         primaryStage.setScene(new Scene(bp_main));
