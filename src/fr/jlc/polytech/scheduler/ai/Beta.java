@@ -7,10 +7,7 @@ import fr.jlc.polytech.scheduler.core.timeline.EventBuilder;
 import fr.jlc.polytech.scheduler.core.timeline.Timeline;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Beta manage a box using an advanced method (compared to Alpha) to assign jobs for the machine
@@ -31,6 +28,7 @@ public class Beta extends Scheduling implements Method {
 	    checkBox(box);
 
 	    box.fillAccumulateTime(); // compute priorities --> The specificity of BETA
+        box.sortAccumulateTime();
         initMachineTimeline(box); // associates machines with timeline lines
 
         while(!box.getAccumulateTime().isEmpty()){
@@ -42,8 +40,8 @@ public class Beta extends Scheduling implements Method {
 
 
         //print the timeline
-        //System.out.println(timeline.toString("Beta Version : "));
-        //System.out.println(timeline.toStringWithTasks());
+        System.out.println(timeline.toString("Beta Version : "));
+        System.out.println(timeline.toStringWithTasks());
         System.out.println("Total time Beta = " + getTime());
 
         return getTime();
@@ -56,7 +54,12 @@ public class Beta extends Scheduling implements Method {
      * @return Task
      */
     private Task maxTask(HashMap<Task, Float> map){
-        float maxValueInMap=(Collections.max(map.values()));
+        //Now the hashmap is sorted
+        Set set = map.keySet();
+        Iterator iterator = set.iterator();
+        return (Task) iterator.next();
+
+        /*float maxValueInMap=(Collections.max(map.values()));
         Set cles = map.keySet();
         Task maxTask = null;
         for (Object cle : cles) {
@@ -65,7 +68,7 @@ public class Beta extends Scheduling implements Method {
                 break;
             }
         }
-        return maxTask;
+        return maxTask;*/
     }
 
 }

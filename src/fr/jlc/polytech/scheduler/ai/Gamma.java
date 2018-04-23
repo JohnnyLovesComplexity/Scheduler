@@ -38,8 +38,8 @@ public class Gamma extends Scheduling implements Method {
 		}
 
 		//afficher la timeline
-		System.out.println(timeline.toString("Gamma Version : "));
-		System.out.println(timeline.toStringWithTasks());
+		//System.out.println(timeline.toString("Gamma Version : "));
+		//System.out.println(timeline.toStringWithTasks());
 		System.out.println("Total time Gamma = " + getTime());
 
 		return getTime();

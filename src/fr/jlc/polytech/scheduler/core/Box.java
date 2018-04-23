@@ -2,7 +2,6 @@ package fr.jlc.polytech.scheduler.core;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -110,6 +109,28 @@ public class Box {
 		assert machine != null;
 		return machine.computeTimeOnMachine(task); //Time of the task on the machine
 	}
+
+	public void sortAccumulateTime(){
+        // Ajout des entrées de la map à une liste
+        final List<Map.Entry<Task, Float>> entries = new ArrayList<Map.Entry<Task, Float>>(this.getAccumulateTime().entrySet());
+
+        // Tri de la liste sur la valeur de l'entrée
+        entries.sort(new Comparator<Map.Entry<Task, Float>>() {
+            @Override
+            public int compare(final Map.Entry<Task, Float> e1, final Map.Entry<Task, Float> e2) {
+                if (e1.getValue() >= e2.getValue()) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+        });
+
+        this.getAccumulateTime().clear();
+        for (final Map.Entry<Task, Float> entry : entries) {
+            this.getAccumulateTime().put(entry.getKey(),entry.getValue());
+        }
+    }
 	
 	/**
 	 * Return the first machine of the type given in the cluster.
