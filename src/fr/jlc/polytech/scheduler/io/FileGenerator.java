@@ -272,7 +272,7 @@ public class FileGenerator {
 					type = Type.CPU;
 				else if (line.startsWith("GPU"))
 					type = Type.GPU;
-				else if (line.startsWith("I/O"))
+				else if (line.startsWith("I/O") || line.startsWith("IO"))
 					type = Type.IO;
 				else
 					throw new UnsupportedOperationException(err_format);
@@ -306,11 +306,15 @@ public class FileGenerator {
 				ArrayList<Task> dependencies = new ArrayList<>();
 				
 				line = line.replaceAll("\t", "");
-				
+
+				if(line.isEmpty())
+					continue;
+
 				// Get the tak number
 				if (!line.toLowerCase().startsWith("t"))
 					throw new UnsupportedOperationException(String.format(err_found, line));
-				
+
+
 				// Delete the 'T'
 				line = line.substring(1);
 				
@@ -339,7 +343,7 @@ public class FileGenerator {
 				
 				// Get the type
 				for (Type t : Type.values()) {
-					if (t.toString().equals(parameters[0])) {
+					if (t.toString().equals(parameters[0]) || (t.toString().equals("I/O") && parameters[0].equals("IO"))) {
 						type = t;
 						break;
 					}
