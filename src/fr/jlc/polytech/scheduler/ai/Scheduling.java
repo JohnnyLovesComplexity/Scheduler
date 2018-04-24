@@ -138,12 +138,14 @@ public class Scheduling {
         int size = this.timeline.getEvents().get(currentLine).size();
         float currentEnd = (this.timeline.getEvents().get(currentLine).isEmpty())? 0:this.timeline.getEvents().get(currentLine).get(size-1).getEnd();
         for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
-            size = this.timeline.getEvents().get(i).size();
-            float end = (this.timeline.getEvents().get(i).isEmpty())? 0:this.timeline.getEvents().get(i).get(size-1).getEnd();
-            float res = currentEnd/end;
-            if(res > 3 && res>ratio){
-                ratio = res;
-                best = i;
+            if(machines.get(currentLine).getType() == machines.get(i).getType()){
+                size = this.timeline.getEvents().get(i).size();
+                float end = (this.timeline.getEvents().get(i).isEmpty())? 0:this.timeline.getEvents().get(i).get(size-1).getEnd();
+                float res = currentEnd/end;
+                if(res > 3 && res>ratio){
+                    ratio = res;
+                    best = i;
+                }
             }
         }
         return best;

@@ -2,6 +2,7 @@ package fr.jlc.polytech.scheduler.ai.JavaFX;
 
 import fr.jlc.polytech.scheduler.ai.Alpha;
 import fr.jlc.polytech.scheduler.ai.Beta;
+import fr.jlc.polytech.scheduler.ai.Gamma;
 import fr.jlc.polytech.scheduler.core.*;
 import fr.jlc.polytech.scheduler.core.timeline.TimelineController;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
@@ -31,16 +32,11 @@ public class BetaAlphaTestJavaFX extends Application {
         //Timeline generation
         Beta beta = new Beta();
         Alpha alpha = new Alpha();
+        Gamma gamma = new Gamma();
 
         //Generated content version
-        box = Generator.generateBox();
+        //box = Generator.generateBox();
         //System.out.println(FileGenerator.generateContent(box));
-
-        //Ungenerated version (To comment when we generate Box)
-        //Text config = new Text(FileGenerator.generateContent(box));
-        //bp_main.setRight(config);
-        /*Text timelineTxt = new Text(beta.getTimeline().toStringWithTasks());
-        bp_main.setBottom(timelineTxt);*/
 
         long debut = System.currentTimeMillis();
         beta.manage(box);
@@ -50,15 +46,22 @@ public class BetaAlphaTestJavaFX extends Application {
         alpha.manage(box);
         System.out.println("Execution Time Alpha : " + (System.currentTimeMillis()-debut) + " ms");
 
+        debut = System.currentTimeMillis();
+        gamma.manage(box);
+        System.out.println("Execution Time Gamma : " + (System.currentTimeMillis()-debut) + " ms");
+
         //JavaFX
         TimelineController timelineBeta = new TimelineController();
         TimelineController timelineAlpha = new TimelineController();
+        //TimelineController timelineGamma = new TimelineController();
 
         GridPane gridPane = new GridPane();
         timelineBeta.setTimeline(beta.getTimeline());
         timelineAlpha.setTimeline(alpha.getTimeline());
+        //timelineGamma.setTimeline(gamma.getTimeline());
         gridPane.add(new ScrollPane(timelineBeta.getView()),0,1);
         gridPane.add(new ScrollPane(timelineAlpha.getView()),0,2);
+        //gridPane.add(new ScrollPane(timelineGamma.getView()),0,3);
 
         bp_main.setCenter(gridPane);
 

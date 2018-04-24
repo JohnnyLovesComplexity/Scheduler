@@ -25,7 +25,6 @@ public class SchedulerMain {
         //Or we read one from a file
         //box = FileGenerator.readBox();
 
-
         System.out.println(FileGenerator.generateContent(box));
 
         Beta beta = new Beta();
