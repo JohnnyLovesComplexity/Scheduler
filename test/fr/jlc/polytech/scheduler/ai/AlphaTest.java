@@ -19,7 +19,7 @@ class AlphaTest extends SchedulingTest{
 
         long debut = System.currentTimeMillis();
         alpha.manage(box);
-        System.out.println("Execution Time Beta : " + (System.currentTimeMillis() - debut) + " ms");
+        System.out.println("Execution Time Alpha : " + (System.currentTimeMillis() - debut) + " ms");
     }
 
 }

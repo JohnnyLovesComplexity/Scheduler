@@ -30,7 +30,7 @@ public class BetaAlphaTestJavaFX extends Application {
         Alpha alpha = new Alpha();
 
         //Generated content version
-        //box = Generator.generateBox();
+        box = Generator.generateBox();
         //System.out.println(FileGenerator.generateContent(box));
 
         //Ungenerated version (To comment when we generate Box)

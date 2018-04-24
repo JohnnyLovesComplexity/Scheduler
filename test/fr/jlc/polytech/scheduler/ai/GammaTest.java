@@ -12,7 +12,7 @@ public class GammaTest extends SchedulingTest{
     void test_manage() {
         gamma = new Gamma();
 
-        box = Generator.generateBox();
+        //box = Generator.generateBox();
         System.out.println(FileGenerator.generateContent(box));
 
         long debut = System.currentTimeMillis();
