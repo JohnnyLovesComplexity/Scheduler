@@ -1,6 +1,6 @@
-package fr.jlc.polytech.scheduler.ai;
+package fr.jlc.polytech.scheduler.ai.Console;
 
-import fr.jlc.polytech.scheduler.core.Generator;
+import fr.jlc.polytech.scheduler.ai.Gamma;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
 import org.junit.jupiter.api.Test;
 

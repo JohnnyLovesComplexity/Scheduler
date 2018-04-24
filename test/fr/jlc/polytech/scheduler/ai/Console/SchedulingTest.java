@@ -1,4 +1,4 @@
-package fr.jlc.polytech.scheduler.ai;
+package fr.jlc.polytech.scheduler.ai.Console;
 
 import fr.jlc.polytech.scheduler.core.*;
 import org.junit.jupiter.api.BeforeEach;

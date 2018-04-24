@@ -19,11 +19,11 @@ public class SchedulerMain {
     public static void main(String[] args) {
 
         // We generate a new box of clusters
-        //box = Generator.generateBox();
+        box = Generator.generateBox();
         //FileGenerator.generateFile(box);
 
         //Or we read one from a file
-        box = FileGenerator.readBox();
+        //box = FileGenerator.readBox();
 
 
         System.out.println(FileGenerator.generateContent(box));
