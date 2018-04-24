@@ -5,6 +5,7 @@ import fr.jlc.polytech.scheduler.core.timeline.TimelineController;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -54,8 +55,8 @@ public class BetaAlphaTestJavaFX extends Application {
         GridPane gridPane = new GridPane();
         timelineBeta.setTimeline(beta.getTimeline());
         timelineAlpha.setTimeline(alpha.getTimeline());
-        gridPane.add(timelineBeta.getView(),0,1);
-        gridPane.add(timelineAlpha.getView(),0,2);
+        gridPane.add(new ScrollPane(timelineBeta.getView()),0,1);
+        gridPane.add(new ScrollPane(timelineAlpha.getView()),0,2);
 
         bp_main.setCenter(gridPane);
 
@@ -66,7 +67,7 @@ public class BetaAlphaTestJavaFX extends Application {
 
 
         primaryStage.setTitle("TimelineTest");
-        primaryStage.setScene(new Scene(bp_main));
+        primaryStage.setScene(new Scene(bp_main, 640, 480));
         primaryStage.show();
 
         timelineBeta.update();

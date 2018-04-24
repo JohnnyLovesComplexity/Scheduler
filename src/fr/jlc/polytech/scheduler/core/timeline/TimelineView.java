@@ -3,6 +3,7 @@ package fr.jlc.polytech.scheduler.core.timeline;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +49,7 @@ public class TimelineView extends Group implements Serializable, Cloneable {
 				if (currentEvent == null)
 					throw new NullPointerException();
 				
-				x = getTimeWeight() * currentEvent.getStart() + 100;
+				x = getTimeWeight() * currentEvent.getStart() + 30;
 				
 				gc.setFill(ColorGenerator.generateRandomBrightColor());
 				gc.fillRect(x, y, getTimeWeight() * (double) currentEvent.getDuration(), getEventsHeight());
