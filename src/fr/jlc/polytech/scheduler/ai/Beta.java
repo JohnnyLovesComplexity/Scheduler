@@ -40,8 +40,8 @@ public class Beta extends Scheduling implements Method {
 
 
         //print the timeline
-        System.out.println(timeline.toString("Beta Version : "));
-        System.out.println(timeline.toStringWithTasks());
+        //System.out.println(timeline.toString("Beta Version : "));
+        //System.out.println(timeline.toStringWithTasks());
         System.out.println("Total time Beta = " + getTime());
 
         return getTime();
@@ -59,6 +59,7 @@ public class Beta extends Scheduling implements Method {
         Iterator iterator = set.iterator();
         return (Task) iterator.next();
 
+        //Not sorted
         /*float maxValueInMap=(Collections.max(map.values()));
         Set cles = map.keySet();
         Task maxTask = null;

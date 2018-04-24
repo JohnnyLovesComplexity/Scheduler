@@ -1,5 +1,7 @@
-package fr.jlc.polytech.scheduler.ai;
+package fr.jlc.polytech.scheduler.ai.JavaFX;
 
+import fr.jlc.polytech.scheduler.ai.Alpha;
+import fr.jlc.polytech.scheduler.ai.Beta;
 import fr.jlc.polytech.scheduler.core.*;
 import fr.jlc.polytech.scheduler.core.timeline.TimelineController;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
@@ -31,7 +33,7 @@ public class BetaAlphaTestJavaFX extends Application {
         Alpha alpha = new Alpha();
 
         //Generated content version
-        //box = Generator.generateBox();
+        box = Generator.generateBox();
         //System.out.println(FileGenerator.generateContent(box));
 
         //Ungenerated version (To comment when we generate Box)

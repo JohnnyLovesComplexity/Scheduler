@@ -1,11 +1,8 @@
-package fr.jlc.polytech.scheduler.ai;
+package fr.jlc.polytech.scheduler.ai.Console;
 
-import fr.jlc.polytech.scheduler.core.*;
+import fr.jlc.polytech.scheduler.ai.Beta;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class BetaTest extends SchedulingTest{
 

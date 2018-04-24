@@ -1,9 +1,8 @@
-package fr.jlc.polytech.scheduler.ai;
+package fr.jlc.polytech.scheduler.ai.Console;
 
+import fr.jlc.polytech.scheduler.ai.Alpha;
 import fr.jlc.polytech.scheduler.io.FileGenerator;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AlphaTest extends SchedulingTest{
 
@@ -19,7 +18,7 @@ class AlphaTest extends SchedulingTest{
 
         long debut = System.currentTimeMillis();
         alpha.manage(box);
-        System.out.println("Execution Time Beta : " + (System.currentTimeMillis() - debut) + " ms");
+        System.out.println("Execution Time Alpha : " + (System.currentTimeMillis() - debut) + " ms");
     }
 
 }

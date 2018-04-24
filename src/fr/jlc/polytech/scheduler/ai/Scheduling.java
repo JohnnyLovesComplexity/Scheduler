@@ -1,6 +1,7 @@
 package fr.jlc.polytech.scheduler.ai;
 
 import fr.jlc.polytech.scheduler.core.Box;
+import fr.jlc.polytech.scheduler.core.Generator;
 import fr.jlc.polytech.scheduler.core.Machine;
 import fr.jlc.polytech.scheduler.core.Task;
 import fr.jlc.polytech.scheduler.core.timeline.EventBuilder;
@@ -28,7 +29,7 @@ public class Scheduling {
         int indexMin = 0;
         if(!timeline.getEvents().isEmpty()){
 
-            float min = 50000;
+            float min = 1000; //We can't have more than 100 Machines
             for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
 
                 //We take this opportunity to update the total time of the timeline.
@@ -101,10 +102,15 @@ public class Scheduling {
     protected void treatTask(@NotNull Box box, Task taskToTreat) {
         //Now we can treat the task
         int lineToPut = bestLineTimeline(taskToTreat);
+
+        //LoadBalancing
+        lineToPut = loadBalancing(lineToPut);
+
         float timeToCompute = this.machines.get(lineToPut).computeTimeOnMachine(taskToTreat);
 
         float start = (this.timeline.getEvents().get(lineToPut).isEmpty())? 0:this.timeline.getEvents().get(lineToPut).get(this.timeline.getEvents().get(lineToPut).size()-1).getEnd();
         //We compare this start time to the time that the dependencies need to finish
+        // to assure that dependency is respected
         float max = maxTimeDependencies(taskToTreat);
         start = Math.max(start,max +1);
 
@@ -124,6 +130,23 @@ public class Scheduling {
                 .createEvent());
 
         box.getAccumulateTime().remove(taskToTreat); //We remove the task that we have treated
+    }
+
+    protected int loadBalancing(int currentLine){
+        int best = currentLine;
+        float ratio = 0;
+        int size = this.timeline.getEvents().get(currentLine).size();
+        float currentEnd = (this.timeline.getEvents().get(currentLine).isEmpty())? 0:this.timeline.getEvents().get(currentLine).get(size-1).getEnd();
+        for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
+            size = this.timeline.getEvents().get(i).size();
+            float end = (this.timeline.getEvents().get(i).isEmpty())? 0:this.timeline.getEvents().get(i).get(size-1).getEnd();
+            float res = currentEnd/end;
+            if(res > 3 && res>ratio){
+                ratio = res;
+                best = i;
+            }
+        }
+        return best;
     }
 
     public Timeline getTimeline() {
