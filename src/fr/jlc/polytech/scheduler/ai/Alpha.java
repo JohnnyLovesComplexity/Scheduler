@@ -18,12 +18,8 @@ import java.util.Random;
  */
 public class Alpha extends Scheduling implements Method {
 	
-	@NotNull
-	private ArrayList<Job> assignedJobs;
-
-	
 	public Alpha() {
-		setAssignedJobs(new ArrayList<>());
+
 	}
 	
 	/**
@@ -59,23 +55,6 @@ public class Alpha extends Scheduling implements Method {
         System.out.println("Total time Alpha = " + getTime());
 		
 		return getTime();
-	}
-
-    /* GETTERS & SETTERS */
-	
-	@NotNull
-	public ArrayList<Job> getAssignedJobs() {
-		if (assignedJobs == null)
-			assignedJobs = new ArrayList<>();
-		
-		return assignedJobs;
-	}
-	
-	public void setAssignedJobs(@NotNull ArrayList<Job> assignedJobs) {
-		if (assignedJobs == null)
-			throw new NullPointerException();
-		
-		this.assignedJobs = assignedJobs;
 	}
 
 	/**
