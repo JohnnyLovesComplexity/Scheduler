@@ -42,10 +42,7 @@ public class Alpha extends Scheduling implements Method {
 			List<Task> keys      = new ArrayList<Task>(box.getAccumulateTime().keySet());
 			Task taskToTreat = keys.get( random.nextInt(keys.size()) );
             //Alpha : We must treat its dependencies if they have not been processed yet.
-            if(!dependenciesDone(taskToTreat))
-				treatDependencies(taskToTreat,box);
-            treatTask(box, taskToTreat);
-            box.getAccumulateTime().remove(taskToTreat); //We remove the task that we have treated
+            treatDependencies(taskToTreat,box); //treat predecessors + the task
         }
 
 
@@ -58,32 +55,19 @@ public class Alpha extends Scheduling implements Method {
 	}
 
 	/**
-	 * Return true if all the task that our task depends of have been done.
-	 * @param task
-	 * @return
+	 * Treat the dependencies of the task chosen
+	 * @param task Task chosen
 	 */
-	private boolean dependenciesDone(Task task){
+	private void treatDependencies(Task task,Box box){
 		for (Task taskPred: task.getDependencies()) {
 			boolean trouve = false;
 			for (int i = 0; i < this.timeline.getEvents().size() ; i++) {
 				for (int j = 0; j < this.timeline.getEvents().get(i).size(); j++) {
-					if(taskPred.equals(this.timeline.getEvents().get(i).get(j).getData()))
-						trouve = true;
+					if(box.getAccumulateTime().containsKey(taskPred))
+						treatDependencies(taskPred,box);
 				}
 			}
-			if(!trouve)
-				return false;
 		}
-		return true;
+		treatTask(box,task);
 	}
-
-	private void treatDependencies(Task task, Box box){
-
-		for (Task taskPred: task.getDependencies()) {
-            if(!dependenciesDone(taskPred))
-                treatDependencies(taskPred,box);
-			treatTask(box,taskPred);
-		}
-	}
-
 }

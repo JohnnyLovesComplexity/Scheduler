@@ -74,4 +74,7 @@ public class SchedulingTest {
         box.addJobs(job1, job2);
     }
 
+    public Box getBox() {
+        return box;
+    }
 }

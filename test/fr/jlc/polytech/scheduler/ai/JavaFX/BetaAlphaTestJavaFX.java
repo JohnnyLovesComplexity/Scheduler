@@ -116,6 +116,11 @@ public class BetaAlphaTestJavaFX extends Application {
         Task t115 = new Task(Type.IO, new Capacity(20, 'G'), t17,t112,t113);
         Task t116 = new Task(Type.IO, new Capacity(50, 'G'), t11,t115);
 
+        Task t21 = new Task(Type.GPU, new Capacity(200, 'G'));
+        Task t22 = new Task(Type.CPU, new Capacity(1, 'T'), t21);
+        Task t23 = new Task(Type.IO, new Capacity(7, 'G'), t22);
+        Task t24 = new Task(Type.IO, new Capacity(5, 'G'), t21);
+
         Job job1 = new Job(
                 t11,
                 t12,
@@ -134,11 +139,6 @@ public class BetaAlphaTestJavaFX extends Application {
                 t115,
                 t116
         );
-
-        Task t21 = new Task(Type.GPU, new Capacity(200, 'G'));
-        Task t22 = new Task(Type.CPU, new Capacity(1, 'T'), t21);
-        Task t23 = new Task(Type.IO, new Capacity(7, 'G'), t22);
-        Task t24 = new Task(Type.IO, new Capacity(5, 'G'), t21);
 
         Job job2 = new Job(
                 t21,

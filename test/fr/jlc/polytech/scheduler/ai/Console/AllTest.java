@@ -40,13 +40,13 @@ public class AllTest extends SchedulingTest{
         gamma.manage(box);
         System.out.println("Execution Time Gamma : " + (System.currentTimeMillis()-debut) + " ms");
 
-        //Uncomment for the test with the setup
-        System.out.println(beta.getTimeline().toStringWithTasks());
+        //Uncomment for the test with the default setup
+        /*System.out.println(beta.getTimeline().toStringWithTasks());
         System.out.println(beta.getTimeline().toString("Beta Version : "));
         System.out.println(alpha.getTimeline().toStringWithTasks());
         System.out.println(alpha.getTimeline().toString("Alpha Version : "));
         System.out.println(gamma.getTimeline().toStringWithTasks());
-        System.out.println(gamma.getTimeline().toString("Gamma Version : "));
+        System.out.println(gamma.getTimeline().toString("Gamma Version : "));*/
 
 
     }
