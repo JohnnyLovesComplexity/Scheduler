@@ -6,15 +6,30 @@ import com.sun.istack.internal.Nullable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Represents a machine
+ * @see Type
+ * @see Capacity
+ * @see Job
+ */
 public class Machine implements Serializable {
-
 	
+	/**
+	 * The type of the machine
+	 * @see Type
+	 */
 	@NotNull
 	private Type type;
 	
+	/**
+	 * The capacity the machine can handle
+	 */
 	@NotNull
 	private Capacity capacity;
 	
+	/**
+	 * The job the machine is currently processing
+	 */
 	@Nullable
 	private Job currentJob;
 	
@@ -41,7 +56,6 @@ public class Machine implements Serializable {
 	
 	public boolean process() {
 		if (currentJob != null && !currentJob.isEmpty()) {
-			// TODO: Process the current job and empty it
 			currentJob.clear();
 			return true;
 		}

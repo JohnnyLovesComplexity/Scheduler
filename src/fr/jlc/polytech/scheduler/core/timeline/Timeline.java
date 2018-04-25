@@ -8,6 +8,13 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+ * Timeline to save events in lines.
+ * Each line represents a list of events.
+ * @see TimelineController
+ * @see TimelineView
+ * @see Event
+ */
 public class Timeline extends EnhancedObservable implements Serializable, Cloneable {
 	
 	/**

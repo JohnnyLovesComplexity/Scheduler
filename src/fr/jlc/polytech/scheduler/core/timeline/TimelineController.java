@@ -11,6 +11,11 @@ import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Controller of the Timeline
+ * @see Timeline
+ * @see TimelineView
+ */
 public class TimelineController implements Observer, Serializable {
 	
 	@NotNull

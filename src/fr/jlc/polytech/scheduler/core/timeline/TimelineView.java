@@ -9,6 +9,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
+/**
+ * Viewer of the Timeline, according to the MVC pattern.
+ * @see Timeline
+ * @see TimelineController
+ */
 public class TimelineView extends Group implements Serializable, Cloneable {
 	
 	private double timeWeight;

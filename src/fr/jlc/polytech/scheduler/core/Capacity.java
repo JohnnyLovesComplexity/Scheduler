@@ -1,8 +1,19 @@
 package fr.jlc.polytech.scheduler.core;
 
+/**
+ * Capacity is a class which represents a unit in byte. It contains a value (long) and a scale (kilo = 10^3,
+ * mega = 10^6, giga = 10^9, tera^12, or nothing for scale = 1).
+ */
 public class Capacity {
 	
+	/**
+	 * The value in Byte
+	 */
 	private long value;
+	
+	/**
+	 * The scale. It can be ' ', 'K', 'M', 'G' or 'T'.
+	 */
 	private char scale;
 	
 	public Capacity(long value, char scale) {

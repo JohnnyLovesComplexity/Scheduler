@@ -6,6 +6,10 @@ import java.util.*;
 
 /**
  * Contains every machine (in cluster) and every task (in job) of the current situation
+ * @see Cluster
+ * @see Machine
+ * @see Job
+ * @see Task
  */
 public class Box {
 	

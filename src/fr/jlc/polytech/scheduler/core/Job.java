@@ -6,7 +6,12 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Job extends ArrayList<Task> implements Serializable {
+/**
+ * List of task that a machine can process.
+ * @see Task
+ * @see Machine
+ */
+public class Job extends ArrayList<Task> implements Serializable, Cloneable {
 
 	public Job(@Nullable Task... tasks) {
 		super(tasks != null ? tasks.length : 3);

@@ -4,6 +4,10 @@ import fr.jlc.polytech.scheduler.core.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Builder of event
+ * @param <T> The type of data for the event to build
+ */
 public class EventBuilder<T> {
 	
 	@NotNull

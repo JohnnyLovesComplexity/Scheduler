@@ -8,11 +8,26 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * A container for any data of parameter {@code T} with start date and end date.
+ * @param <T> The type of the data that the event contains.
+ */
 public class Event<T> extends EnhancedObservable implements Serializable, Cloneable {
 	
+	/**
+	 * The object to contain
+	 */
 	@Nullable
 	private T data;
+	
+	/**
+	 * The beginning of the event
+	 */
 	private float start;
+	
+	/**
+	 * The end of the event
+	 */
 	private float end;
 	
 	public Event(@Nullable T data, float start, float end) {
@@ -40,6 +55,13 @@ public class Event<T> extends EnhancedObservable implements Serializable, Clonea
 		return isValid(this);
 	}
 	
+	/**
+	 * Check if two events overlap
+	 * @param e1 The first event
+	 * @param e2 The second event
+	 * @return Return {@code true} if the events overlap to each other, {@code false} otherwise.
+	 * @throws NullPointerException Thrown if e1 or e2 is null.
+	 */
 	public static boolean areOverlapping(@NotNull Event<?> e1, @NotNull Event<?> e2) {
 		if (e1 == null || e2 == null)
 			throw new NullPointerException();

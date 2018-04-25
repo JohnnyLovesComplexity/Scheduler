@@ -8,12 +8,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Task of a job, processed by a machine. Can be use with Event (Event&lt;Task&gt;)
+ * @see Job
+ * @see Type
+ * @see Capacity
+ */
 public class Task implements Serializable {
 	
+	/**
+	 * The type of the task
+	 * @see Type
+	 */
 	@NotNull
     private Type type;
+	
+	/**
+	 * The capacity of the task.
+	 * Example: 3GB
+	 * @see Capacity
+	 */
 	@NotNull
     private Capacity capacity;
+	
+	/**
+	 * The dependencies of the task. If {@code dependencies} is empty, it means that the task has no dependencies
+	 * @see ArrayList
+	 */
     @NotNull
     private ArrayList<Task> dependencies;
 

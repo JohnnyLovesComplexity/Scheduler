@@ -6,6 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Color Generator
+ */
 public class ColorGenerator {
 	
 	private static Random random = null;

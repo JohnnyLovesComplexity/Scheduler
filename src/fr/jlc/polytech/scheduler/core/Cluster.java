@@ -7,7 +7,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Cluster extends ArrayList<Machine> implements Serializable {
+/**
+ * List of machines
+ */
+public class Cluster extends ArrayList<Machine> implements Serializable, Cloneable {
 	
 	public Cluster(@Nullable Machine... machines) {
 		super(machines != null ? machines.length : 3);
