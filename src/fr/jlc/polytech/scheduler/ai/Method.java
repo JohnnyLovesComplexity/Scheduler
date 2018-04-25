@@ -3,6 +3,9 @@ package fr.jlc.polytech.scheduler.ai;
 import fr.jlc.polytech.scheduler.core.Box;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Interface that all method must implement.
+ */
 public interface Method {
 	
 	/**

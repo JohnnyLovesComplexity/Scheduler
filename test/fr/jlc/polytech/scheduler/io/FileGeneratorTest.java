@@ -8,10 +8,18 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit5 class to test the I/O of a box
+ * @see FileGenerator
+ * @see Box
+ */
 class FileGeneratorTest {
 	
 	Box box;
 	
+	/**
+	 * Setup the box according to the situation seen in class (slide)
+	 */
 	@BeforeEach
 	void setup() {
 		box = new Box();
@@ -55,22 +63,34 @@ class FileGeneratorTest {
 		System.out.println("FileGeneratorTest.setup> box: " + box.toString());
 	}
 	
+	/**
+	 * Generate the content (String) of "box"
+	 */
 	@Test
 	void test_generateContent() {
 		System.out.println("test_generateContent> box:");
 		System.out.println(FileGenerator.generateContent(box));
 	}
 	
+	/**
+	 * Generate the file "input_scheduler.txt" with "box"
+	 */
 	@Test
 	void test_generateFile() {
 		FileGenerator.generateFile(box);
 	}
 	
+	/**
+	 * Read only the content of the file "input_scheduler.txt" (without parsing it)
+	 */
 	@Test
 	void test_readContent() {
 		System.out.println("test_readContent>\n" + FileGenerator.readContent());
 	}
 	
+	/**
+	 * Read the content of the file and parse it to generate a box.
+	 */
 	@Test
 	void test_readBox() {
 		Box b = FileGenerator.readBox();

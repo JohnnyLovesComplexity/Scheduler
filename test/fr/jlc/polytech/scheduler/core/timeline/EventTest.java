@@ -6,11 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit5 class to test Event&lt;T&gt;.
+ */
 class EventTest {
 	
 	Event<String> e1;
 	Event<String> e2;
 	
+	/**
+	 * Setup "e1" and "e2"
+	 */
 	@BeforeEach
 	void setup() {
 		e1 = new EventBuilder<String>()
@@ -22,6 +28,9 @@ class EventTest {
 				.createEvent();
 	}
 	
+	/**
+	 * Test overlap
+	 */
 	@Test
 	void areOverlapping() {
 		/* OVERLAPPING */
